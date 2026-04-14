@@ -7,6 +7,15 @@ get_header(); ?>
 
 <main class="pt-40">
     <!-- Our Journey -->
+    <?php
+    $stat1_val = get_post_meta(get_the_ID(), '_hero_stat1_val', true) ?: '200+';
+    $stat1_lbl = get_post_meta(get_the_ID(), '_hero_stat1_lbl', true) ?: 'Happy Customers';
+    $stat2_val = get_post_meta(get_the_ID(), '_hero_stat2_val', true) ?: '10k+';
+    $stat2_lbl = get_post_meta(get_the_ID(), '_hero_stat2_lbl', true) ?: 'Properties For Clients';
+    $stat3_val = get_post_meta(get_the_ID(), '_hero_stat3_val', true) ?: '16+';
+    $stat3_lbl = get_post_meta(get_the_ID(), '_hero_stat3_lbl', true) ?: 'Years of Experience';
+    $hero_img = get_the_post_thumbnail_url(get_the_ID(), 'full') ?: 'https://picsum.photos/seed/journey/800/600';
+    ?>
     <section class="py-20">
         <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
@@ -16,29 +25,35 @@ get_header(); ?>
                         <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
                         <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
                     </div>
-                    <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6">Our Journey</h1>
-                    <p class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-2xl mx-auto lg:mx-0">
-                        Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary. Over the years, we've expanded our reach, forged valued partnerships, and gained the trust of countless clients.
-                    </p>
+                    <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6"><?php the_title(); ?></h1>
+                    <div class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-2xl mx-auto lg:mx-0">
+                        <?php 
+                        if (have_posts()) :
+                            while (have_posts()) : the_post();
+                                the_content();
+                            endwhile;
+                        endif;
+                        ?>
+                    </div>
                     
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                         <div class="glass-card p-4 sm:p-6">
-                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1">200+</div>
-                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider">Happy Customers</div>
+                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1"><?php echo esc_html($stat1_val); ?></div>
+                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider"><?php echo esc_html($stat1_lbl); ?></div>
                         </div>
                         <div class="glass-card p-4 sm:p-6">
-                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1">10k+</div>
-                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider">Properties For Clients</div>
+                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1"><?php echo esc_html($stat2_val); ?></div>
+                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider"><?php echo esc_html($stat2_lbl); ?></div>
                         </div>
                         <div class="glass-card p-4 sm:p-6 col-span-2 sm:col-span-1">
-                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1">16+</div>
-                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider">Years of Experience</div>
+                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1"><?php echo esc_html($stat3_val); ?></div>
+                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider"><?php echo esc_html($stat3_lbl); ?></div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="relative rounded-3xl overflow-hidden border border-[#262626]">
-                    <img src="https://picsum.photos/seed/journey/800/600" alt="Our Journey" class="w-full h-full object-cover">
+                    <img src="<?php echo esc_url($hero_img); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover">
                 </div>
             </div>
         </div>
@@ -68,7 +83,7 @@ get_header(); ?>
                                 </div>
                                 <h3 class="text-xl font-bold">Trust</h3>
                             </div>
-                            <p class="text-[#B3B3B3] text-sm">Trust is the cornerstone of every successful real estate transaction.</p>
+                            <p class="text-[#999999] text-sm">Trust is the cornerstone of every successful real estate transaction.</p>
                         </div>
                         <div>
                             <div class="flex items-center gap-4 mb-4">
@@ -77,7 +92,7 @@ get_header(); ?>
                                 </div>
                                 <h3 class="text-xl font-bold">Excellence</h3>
                             </div>
-                            <p class="text-[#B3B3B3] text-sm">We set the bar high for ourselves. From the properties we list to the services we provide.</p>
+                            <p class="text-[#999999] text-sm">We set the bar high for ourselves. From the properties we list to the services we provide.</p>
                         </div>
                         <div>
                             <div class="flex items-center gap-4 mb-4">
@@ -86,7 +101,7 @@ get_header(); ?>
                                 </div>
                                 <h3 class="text-xl font-bold">Client-Centric</h3>
                             </div>
-                            <p class="text-[#B3B3B3] text-sm">Your dreams and needs are at the center of our universe. We listen, understand.</p>
+                            <p class="text-[#999999] text-sm">Your dreams and needs are at the center of our universe. We listen, understand.</p>
                         </div>
                         <div>
                             <div class="flex items-center gap-4 mb-4">
@@ -95,9 +110,250 @@ get_header(); ?>
                                 </div>
                                 <h3 class="text-xl font-bold">Our Commitment</h3>
                             </div>
-                            <p class="text-[#B3B3B3] text-sm">We are dedicated to providing you with the highest level of service, professionalism, and support.</p>
+                            <p class="text-[#999999] text-sm">We are dedicated to providing you with the highest level of service, professionalism, and support.</p>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Achievements -->
+    <section class="py-20">
+        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
+                <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
+                <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
+            </div>
+            <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6">Our Achievements</h2>
+            <p class="text-[#B3B3B3] max-w-3xl mb-12">
+                Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary.
+            </p>
+            
+            <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div class="glass-card p-10">
+                    <h3 class="text-2xl font-bold mb-4">3+ Years of Excellence</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">With over 3 years in the industry, we've amassed a wealth of knowledge and experience, becoming a go-to resource for all things real estate.</p>
+                </div>
+                <div class="glass-card p-10">
+                    <h3 class="text-2xl font-bold mb-4">Happy Clients</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">Our greatest achievement is the satisfaction of our clients. Their success stories fuel our passion for what we do.</p>
+                </div>
+                <div class="glass-card p-10">
+                    <h3 class="text-2xl font-bold mb-4">Industry Recognition</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">We've earned the respect of our peers and industry leaders, with accolades and awards that reflect our commitment to excellence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigating the Estatein Experience -->
+    <section class="py-20">
+        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
+                <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
+                <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
+            </div>
+            <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6">Navigating the Estatein Experience</h2>
+            <p class="text-[#B3B3B3] max-w-3xl mb-12">
+                At Estatein, we've designed a straightforward process to help you find and purchase your dream property with ease. Here's a step-by-step guide to how it all works.
+            </p>
+            
+            <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Step 01 -->
+                <div class="glass-card p-10 relative">
+                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 01</div>
+                    <h3 class="text-xl font-bold mb-4 mt-4">Discover a World of Possibilities</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">Your journey begins with exploring our carefully curated property listings. Use our intuitive search tools to filter properties based on your preferences, including location, type, size, and budget.</p>
+                </div>
+                <!-- Step 02 -->
+                <div class="glass-card p-10 relative">
+                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 02</div>
+                    <h3 class="text-xl font-bold mb-4 mt-4">Narrowing Down Your Choices</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">Once you've found properties that catch your eye, save them to your account or make a shortlist. This allows you to compare and revisit your favorites as you make your decision.</p>
+                </div>
+                <!-- Step 03 -->
+                <div class="glass-card p-10 relative">
+                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 03</div>
+                    <h3 class="text-xl font-bold mb-4 mt-4">Personalized Guidance</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">Have questions about a property or need more information? Our dedicated team of real estate experts is just a call or message away.</p>
+                </div>
+                <!-- Step 04 -->
+                <div class="glass-card p-10 relative">
+                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 04</div>
+                    <h3 class="text-xl font-bold mb-4 mt-4">See It for Yourself</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">Arrange viewings of the properties you're interested in. We'll coordinate with the property owners and accompany you to ensure you get a firsthand look at your potential new home.</p>
+                </div>
+                <!-- Step 05 -->
+                <div class="glass-card p-10 relative">
+                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 05</div>
+                    <h3 class="text-xl font-bold mb-4 mt-4">Making Informed Decisions</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">Before making an offer, our team will assist you with due diligence, including property inspections, legal checks, and market analysis. We want you to be fully informed and confident in your choice.</p>
+                </div>
+                <!-- Step 06 -->
+                <div class="glass-card p-10 relative">
+                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 06</div>
+                    <h3 class="text-xl font-bold mb-4 mt-4">Getting the Best Deal</h3>
+                    <p class="text-[#999999] text-sm leading-relaxed">We'll help you negotiate the best terms and prepare your offer. Our goal is to secure the property at the right price and on favorable terms.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meet the Estatein Team -->
+    <section class="py-20">
+        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
+                <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
+                <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
+            </div>
+            <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6">Meet the Estatein Team</h2>
+            <p class="text-[#B3B3B3] max-w-3xl mb-12">
+                At Estatein, our success is driven by the dedication and expertise of our team. Get to know the people behind our mission to make your real estate dreams a reality.
+            </p>
+            
+            <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-6">
+                <?php
+                $team_query = new WP_Query(array(
+                    'post_type' => 'team_member',
+                    'posts_per_page' => -1,
+                ));
+
+                if ($team_query->have_posts()) :
+                    while ($team_query->have_posts()) : $team_query->the_post();
+                        $position = get_post_meta(get_the_ID(), '_team_position', true);
+                        $twitter = get_post_meta(get_the_ID(), '_team_twitter', true);
+                        ?>
+                        <div class="glass-card p-6 text-center group">
+                            <div class="relative mb-6 rounded-2xl overflow-hidden aspect-[4/5]">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <?php the_post_thumbnail('full', array('class' => 'w-full h-full object-cover')); ?>
+                                <?php else : ?>
+                                    <img src="https://i.pravatar.cc/400?u=<?php the_ID(); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover">
+                                <?php endif; ?>
+                                <?php if ($twitter) : ?>
+                                    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                                        <a href="<?php echo esc_url($twitter); ?>" class="w-10 h-10 rounded-full bg-[#703BF7] flex items-center justify-center text-white hover:bg-[#5d2ee0] transition-all">
+                                            <i data-lucide="twitter" class="w-5 h-5"></i>
+                                        </a>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <h3 class="text-xl font-bold mb-1"><?php the_title(); ?></h3>
+                            <p class="text-sm text-[#999999] mb-4"><?php echo esc_html($position); ?></p>
+                            <div class="flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-[#1E1E1E] border border-[#262626] w-fit mx-auto">
+                                <span class="text-sm font-medium">Say Hello 👋</span>
+                                <button class="w-8 h-8 rounded-full bg-[#703BF7] flex items-center justify-center">
+                                    <i data-lucide="send" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <?php
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Valued Clients -->
+    <section class="py-20">
+        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-2 mb-4">
+                <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
+                <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
+                <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
+            </div>
+            <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6">Our Valued Clients</h2>
+            <p class="text-[#B3B3B3] max-w-3xl mb-12">
+                At Estatein, we have had the privilege of working with a diverse range of clients across various industries. Here are some of the clients we've had the pleasure of serving.
+            </p>
+            
+            <div class="swiper clients-swiper overflow-visible">
+                <div class="swiper-wrapper">
+                    <?php
+                    $clients_query = new WP_Query(array(
+                        'post_type' => 'client',
+                        'posts_per_page' => -1,
+                    ));
+
+                    if ($clients_query->have_posts()) :
+                        while ($clients_query->have_posts()) : $clients_query->the_post();
+                            $since = get_post_meta(get_the_ID(), '_client_since', true);
+                            $website = get_post_meta(get_the_ID(), '_client_website', true);
+                            $domain = get_post_meta(get_the_ID(), '_client_domain', true);
+                            $category = get_post_meta(get_the_ID(), '_client_category', true);
+                            $testimonial = get_post_meta(get_the_ID(), '_client_testimonial', true);
+                            ?>
+                            <div class="swiper-slide glass-card p-10 h-auto">
+                                <div class="flex justify-between items-start mb-10">
+                                    <div>
+                                        <div class="text-xs text-[#999999] mb-2">Since <?php echo esc_html($since); ?></div>
+                                        <h3 class="text-2xl font-bold"><?php the_title(); ?></h3>
+                                    </div>
+                                    <?php if ($website) : ?>
+                                        <a href="<?php echo esc_url($website); ?>" class="px-5 py-2.5 rounded-lg border border-[#262626] text-sm font-medium hover:bg-[#1E1E1E]">Visit Website</a>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="grid grid-cols-2 gap-8 mb-10">
+                                    <div>
+                                        <div class="text-xs text-[#999999] mb-2 flex items-center gap-2"><i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Domain</div>
+                                        <div class="font-medium"><?php echo esc_html($domain); ?></div>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs text-[#999999] mb-2 flex items-center gap-2"><i data-lucide="zap" class="w-3.5 h-3.5"></i> Category</div>
+                                        <div class="font-medium"><?php echo esc_html($category); ?></div>
+                                    </div>
+                                </div>
+                                <div class="p-6 rounded-xl border border-[#262626] bg-[#0F0F0F]">
+                                    <div class="text-xs text-[#999999] mb-4">What They Said 🏠</div>
+                                    <p class="text-sm leading-relaxed"><?php echo esc_html($testimonial); ?></p>
+                                </div>
+                            </div>
+                            <?php
+                        endwhile;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
+                <!-- Navigation -->
+                <div class="flex items-center justify-between mt-12 border-t border-[#262626] pt-8">
+                    <div class="text-[#B3B3B3]"><span class="clients-current text-white">01</span> of <span class="clients-total">05</span></div>
+                    <div class="flex gap-4">
+                        <button class="clients-prev w-14 h-14 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1A1A1A] transition-all">
+                            <i data-lucide="arrow-left" class="w-6 h-6"></i>
+                        </button>
+                        <button class="clients-next w-14 h-14 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1A1A1A] transition-all">
+                            <i data-lucide="arrow-right" class="w-6 h-6"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <?php
+    $cta_title = get_post_meta(get_the_ID(), '_cta_title', true) ?: 'Start Your Real Estate Journey Today';
+    $cta_desc = get_post_meta(get_the_ID(), '_cta_desc', true) ?: "Your dream property is just a click away. Whether you're looking for a new home, a strategic investment, or expert real estate advice, Estatein is here to assist you.";
+    $cta_btn_text = get_post_meta(get_the_ID(), '_cta_btn_text', true) ?: 'Explore Properties';
+    $cta_btn_link = get_post_meta(get_the_ID(), '_cta_btn_link', true) ?: '#';
+    ?>
+    <section class="py-20">
+        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="relative rounded-3xl overflow-hidden p-12 lg:p-20 border border-[#262626] bg-gradient-to-br from-[#1A1A1A] to-[#0F0F0F]">
+                <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
+                    <div class="max-w-4xl text-center lg:text-left">
+                        <h2 class="text-4xl lg:text-5xl font-bold mb-6"><?php echo esc_html($cta_title); ?></h2>
+                        <p class="text-[#999999] text-lg"><?php echo esc_html($cta_desc); ?></p>
+                    </div>
+                    <a href="<?php echo esc_url($cta_btn_link); ?>" class="h-16 px-10 rounded-xl bg-[#703BF7] font-bold text-lg hover:bg-[#5d2ee0] transition-all flex items-center justify-center">
+                        <?php echo esc_html($cta_btn_text); ?>
+                    </a>
                 </div>
             </div>
         </div>

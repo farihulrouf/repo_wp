@@ -12,9 +12,15 @@ This is a custom WordPress theme developed based on the Estatein Premium Real Es
    - `testimonial`: Manages client testimonials with meta fields for Location and Rating.
    - `faq`: Manages frequently asked questions with meta fields for Button Text and Link.
    - `feature`: Manages the four feature cards on the home page with a custom Lucide icon field.
-5. **Hero Section Settings**: The Home page has a custom meta box to manage the Hero title (gray part), stats (values and labels), and the Hero image (via Featured Image).
-6. **Sliders**: Integrated Swiper.js for Properties, Testimonials, and FAQ sections.
-6. **Responsiveness**: The theme is fully responsive, utilizing Tailwind's mobile-first utility classes. Special attention was given to breakpoints at 390px (Mobile), 1440px (Laptop), and 1600px+ (Desktop).
+5. **Hero & CTA Section Settings**: The Home and About pages have a custom meta box to manage:
+   - **Hero**: Title (gray part), stats (values and labels), Hero image (via Featured Image), and **Buttons** (text and links for both buttons).
+   - **CTA**: Title, description, button text, and button link for the "Start Your Real Estate Journey" section.
+6. **About Page**: Uses the "About Page" template.
+   - **Our Journey**: Uses the Hero stats and Featured Image.
+   - **Team Members**: Managed via the `team_member` custom post type.
+   - **Clients**: Managed via the `client` custom post type.
+7. **Sliders**: Integrated Swiper.js for Properties, Testimonials, and FAQ sections.
+8. **Responsiveness**: The theme is fully responsive, utilizing Tailwind's mobile-first utility classes. Special attention was given to breakpoints at 390px (Mobile), 1440px (Laptop), and 1600px+ (Desktop).
 5. **Dynamic Content**:
    - `front-page.php` handles the Home page.
    - `page-about.php` handles the About page.

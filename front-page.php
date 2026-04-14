@@ -353,7 +353,7 @@ get_header(); ?>
         <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="relative rounded-3xl overflow-hidden p-12 lg:p-20 border border-[#262626] bg-gradient-to-br from-[#1A1A1A] to-[#0F0F0F]">
                 <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
-                    <div class="max-w-2xl text-center lg:text-left">
+                    <div class="max-w-4xl text-center lg:text-left">
                         <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6"><?php echo esc_html($cta_title); ?></h2>
                         <p class="text-[#999999] text-lg"><?php echo esc_html($cta_desc); ?></p>
                     </div>

@@ -113,6 +113,30 @@ function estatein_register_post_types() {
         'supports' => array('title', 'editor', 'custom-fields'),
         'show_in_rest' => true,
     ));
+
+    // Team Member CPT
+    register_post_type('team_member', array(
+        'labels' => array(
+            'name' => __('Team Members', 'estatein'),
+            'singular_name' => __('Team Member', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-groups',
+        'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Client CPT
+    register_post_type('client', array(
+        'labels' => array(
+            'name' => __('Clients', 'estatein'),
+            'singular_name' => __('Client', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-businessman',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
 }
 add_action('init', 'estatein_register_post_types');
 
@@ -199,6 +223,24 @@ function estatein_add_property_metaboxes() {
         'high'
     );
 
+    add_meta_box(
+        'team_details',
+        __('Team Member Details', 'estatein'),
+        'estatein_team_details_callback',
+        'team_member',
+        'normal',
+        'high'
+    );
+
+    add_meta_box(
+        'client_details',
+        __('Client Details', 'estatein'),
+        'estatein_client_details_callback',
+        'client',
+        'normal',
+        'high'
+    );
+
     // Hero Meta Box for Front Page
     add_meta_box(
         'hero_details',
@@ -218,6 +260,53 @@ function estatein_feature_details_callback($post) {
     <div style="padding: 10px 0;">
         <label style="display:block; margin-bottom:5px;"><?php _e('Lucide Icon Name (e.g. home, dollar-sign, settings)', 'estatein'); ?></label>
         <input type="text" name="feature_icon" value="<?php echo esc_attr($icon); ?>" style="width:100%;" />
+    </div>
+    <?php
+}
+
+function estatein_team_details_callback($post) {
+    wp_nonce_field('estatein_team_details_nonce', 'estatein_team_details_nonce_field');
+    $position = get_post_meta($post->ID, '_team_position', true);
+    $twitter = get_post_meta($post->ID, '_team_twitter', true);
+    ?>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Position', 'estatein'); ?></label>
+        <input type="text" name="team_position" value="<?php echo esc_attr($position); ?>" style="width:100%;" />
+    </div>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Twitter Link', 'estatein'); ?></label>
+        <input type="text" name="team_twitter" value="<?php echo esc_attr($twitter); ?>" style="width:100%;" />
+    </div>
+    <?php
+}
+
+function estatein_client_details_callback($post) {
+    wp_nonce_field('estatein_client_details_nonce', 'estatein_client_details_nonce_field');
+    $since = get_post_meta($post->ID, '_client_since', true);
+    $website = get_post_meta($post->ID, '_client_website', true);
+    $domain = get_post_meta($post->ID, '_client_domain', true);
+    $category = get_post_meta($post->ID, '_client_category', true);
+    $testimonial = get_post_meta($post->ID, '_client_testimonial', true);
+    ?>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Since Year (e.g. 2019)', 'estatein'); ?></label>
+        <input type="text" name="client_since" value="<?php echo esc_attr($since); ?>" style="width:100%;" />
+    </div>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Website Link', 'estatein'); ?></label>
+        <input type="text" name="client_website" value="<?php echo esc_attr($website); ?>" style="width:100%;" />
+    </div>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Domain (e.g. Commercial Real Estate)', 'estatein'); ?></label>
+        <input type="text" name="client_domain" value="<?php echo esc_attr($domain); ?>" style="width:100%;" />
+    </div>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Category (e.g. Luxury Home Development)', 'estatein'); ?></label>
+        <input type="text" name="client_category" value="<?php echo esc_attr($category); ?>" style="width:100%;" />
+    </div>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('What They Said', 'estatein'); ?></label>
+        <textarea name="client_testimonial" style="width:100%;" rows="4"><?php echo esc_textarea($testimonial); ?></textarea>
     </div>
     <?php
 }
@@ -427,6 +516,26 @@ function estatein_save_property_details($post_id) {
         }
     }
 
+    // Team Meta
+    if (isset($_POST['estatein_team_details_nonce_field']) && wp_verify_nonce($_POST['estatein_team_details_nonce_field'], 'estatein_team_details_nonce')) {
+        if (isset($_POST['team_position'])) {
+            update_post_meta($post_id, '_team_position', sanitize_text_field($_POST['team_position']));
+        }
+        if (isset($_POST['team_twitter'])) {
+            update_post_meta($post_id, '_team_twitter', sanitize_text_field($_POST['team_twitter']));
+        }
+    }
+
+    // Client Meta
+    if (isset($_POST['estatein_client_details_nonce_field']) && wp_verify_nonce($_POST['estatein_client_details_nonce_field'], 'estatein_client_details_nonce')) {
+        $client_fields = ['client_since', 'client_website', 'client_domain', 'client_category', 'client_testimonial'];
+        foreach ($client_fields as $field) {
+            if (isset($_POST[$field])) {
+                update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
+            }
+        }
+    }
+
     // Hero Meta
     if (isset($_POST['estatein_hero_details_nonce_field']) && wp_verify_nonce($_POST['estatein_hero_details_nonce_field'], 'estatein_hero_details_nonce')) {
         $hero_fields = [
@@ -525,6 +634,36 @@ function estatein_custom_js() {
                     1280: { slidesPerView: 3 }
                 }
             });
+
+            // Initialize Swiper for Clients
+            const clientsSwiper = new Swiper('.clients-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 24,
+                navigation: {
+                    nextEl: '.clients-next',
+                    prevEl: '.clients-prev',
+                },
+                breakpoints: {
+                    768: { slidesPerView: 2 }
+                },
+                on: {
+                    init: function() {
+                        updateClientsCounter(this);
+                    },
+                    slideChange: function() {
+                        updateClientsCounter(this);
+                    }
+                }
+            });
+
+            function updateClientsCounter(swiper) {
+                const current = document.querySelector('.clients-current');
+                const total = document.querySelector('.clients-total');
+                if (current && total) {
+                    current.textContent = (swiper.realIndex + 1).toString().padStart(2, '0');
+                    total.textContent = swiper.slides.length.toString().padStart(2, '0');
+                }
+            }
         });
     </script>
     <?php
