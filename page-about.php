@@ -132,18 +132,25 @@ get_header(); ?>
             </p>
             
             <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                <div class="glass-card p-10">
-                    <h3 class="text-2xl font-bold mb-4">3+ Years of Excellence</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">With over 3 years in the industry, we've amassed a wealth of knowledge and experience, becoming a go-to resource for all things real estate.</p>
-                </div>
-                <div class="glass-card p-10">
-                    <h3 class="text-2xl font-bold mb-4">Happy Clients</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">Our greatest achievement is the satisfaction of our clients. Their success stories fuel our passion for what we do.</p>
-                </div>
-                <div class="glass-card p-10">
-                    <h3 class="text-2xl font-bold mb-4">Industry Recognition</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">We've earned the respect of our peers and industry leaders, with accolades and awards that reflect our commitment to excellence.</p>
-                </div>
+                <?php
+                $achievements_query = new WP_Query(array(
+                    'post_type' => 'achievement',
+                    'posts_per_page' => -1,
+                    'order' => 'ASC'
+                ));
+
+                if ($achievements_query->have_posts()) :
+                    while ($achievements_query->have_posts()) : $achievements_query->the_post();
+                        ?>
+                        <div class="glass-card p-10">
+                            <h3 class="text-2xl font-bold mb-4"><?php the_title(); ?></h3>
+                            <p class="text-[#999999] text-sm leading-relaxed"><?php echo get_the_content(); ?></p>
+                        </div>
+                        <?php
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
             </div>
         </div>
     </section>
@@ -162,42 +169,29 @@ get_header(); ?>
             </p>
             
             <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6">
-                <!-- Step 01 -->
-                <div class="glass-card p-10 relative">
-                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 01</div>
-                    <h3 class="text-xl font-bold mb-4 mt-4">Discover a World of Possibilities</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">Your journey begins with exploring our carefully curated property listings. Use our intuitive search tools to filter properties based on your preferences, including location, type, size, and budget.</p>
-                </div>
-                <!-- Step 02 -->
-                <div class="glass-card p-10 relative">
-                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 02</div>
-                    <h3 class="text-xl font-bold mb-4 mt-4">Narrowing Down Your Choices</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">Once you've found properties that catch your eye, save them to your account or make a shortlist. This allows you to compare and revisit your favorites as you make your decision.</p>
-                </div>
-                <!-- Step 03 -->
-                <div class="glass-card p-10 relative">
-                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 03</div>
-                    <h3 class="text-xl font-bold mb-4 mt-4">Personalized Guidance</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">Have questions about a property or need more information? Our dedicated team of real estate experts is just a call or message away.</p>
-                </div>
-                <!-- Step 04 -->
-                <div class="glass-card p-10 relative">
-                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 04</div>
-                    <h3 class="text-xl font-bold mb-4 mt-4">See It for Yourself</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">Arrange viewings of the properties you're interested in. We'll coordinate with the property owners and accompany you to ensure you get a firsthand look at your potential new home.</p>
-                </div>
-                <!-- Step 05 -->
-                <div class="glass-card p-10 relative">
-                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 05</div>
-                    <h3 class="text-xl font-bold mb-4 mt-4">Making Informed Decisions</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">Before making an offer, our team will assist you with due diligence, including property inspections, legal checks, and market analysis. We want you to be fully informed and confident in your choice.</p>
-                </div>
-                <!-- Step 06 -->
-                <div class="glass-card p-10 relative">
-                    <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl">Step 06</div>
-                    <h3 class="text-xl font-bold mb-4 mt-4">Getting the Best Deal</h3>
-                    <p class="text-[#999999] text-sm leading-relaxed">We'll help you negotiate the best terms and prepare your offer. Our goal is to secure the property at the right price and on favorable terms.</p>
-                </div>
+                <?php
+                $experience_query = new WP_Query(array(
+                    'post_type' => 'experience_step',
+                    'posts_per_page' => -1,
+                    'order' => 'ASC'
+                ));
+
+                if ($experience_query->have_posts()) :
+                    while ($experience_query->have_posts()) : $experience_query->the_post();
+                        $step_label = get_post_meta(get_the_ID(), '_step_label', true);
+                        ?>
+                        <div class="glass-card p-10 relative">
+                            <?php if ($step_label) : ?>
+                                <div class="absolute top-0 right-0 p-6 text-sm font-medium text-[#999999] border-l border-b border-[#262626] rounded-bl-xl"><?php echo esc_html($step_label); ?></div>
+                            <?php endif; ?>
+                            <h3 class="text-xl font-bold mb-4 mt-4"><?php the_title(); ?></h3>
+                            <p class="text-[#999999] text-sm leading-relaxed"><?php echo get_the_content(); ?></p>
+                        </div>
+                        <?php
+                    endwhile;
+                    wp_reset_postdata();
+                endif;
+                ?>
             </div>
         </div>
     </section>

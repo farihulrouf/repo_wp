@@ -137,6 +137,30 @@ function estatein_register_post_types() {
         'supports' => array('title', 'editor', 'custom-fields'),
         'show_in_rest' => true,
     ));
+
+    // Achievement CPT
+    register_post_type('achievement', array(
+        'labels' => array(
+            'name' => __('Achievements', 'estatein'),
+            'singular_name' => __('Achievement', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-awards',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Experience Step CPT
+    register_post_type('experience_step', array(
+        'labels' => array(
+            'name' => __('Experience Steps', 'estatein'),
+            'singular_name' => __('Experience Step', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-list-view',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
 }
 add_action('init', 'estatein_register_post_types');
 
@@ -241,6 +265,15 @@ function estatein_add_property_metaboxes() {
         'high'
     );
 
+    add_meta_box(
+        'experience_step_details',
+        __('Step Details', 'estatein'),
+        'estatein_experience_step_details_callback',
+        'experience_step',
+        'normal',
+        'high'
+    );
+
     // Hero Meta Box for Front Page
     add_meta_box(
         'hero_details',
@@ -307,6 +340,17 @@ function estatein_client_details_callback($post) {
     <div style="padding: 10px 0;">
         <label style="display:block; margin-bottom:5px;"><?php _e('What They Said', 'estatein'); ?></label>
         <textarea name="client_testimonial" style="width:100%;" rows="4"><?php echo esc_textarea($testimonial); ?></textarea>
+    </div>
+    <?php
+}
+
+function estatein_experience_step_details_callback($post) {
+    wp_nonce_field('estatein_experience_step_details_nonce', 'estatein_experience_step_details_nonce_field');
+    $step_label = get_post_meta($post->ID, '_step_label', true);
+    ?>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Step Label (e.g. Step 01)', 'estatein'); ?></label>
+        <input type="text" name="step_label" value="<?php echo esc_attr($step_label); ?>" style="width:100%;" />
     </div>
     <?php
 }
@@ -533,6 +577,13 @@ function estatein_save_property_details($post_id) {
             if (isset($_POST[$field])) {
                 update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
             }
+        }
+    }
+
+    // Experience Step Meta
+    if (isset($_POST['estatein_experience_step_details_nonce_field']) && wp_verify_nonce($_POST['estatein_experience_step_details_nonce_field'], 'estatein_experience_step_details_nonce')) {
+        if (isset($_POST['step_label'])) {
+            update_post_meta($post_id, '_step_label', sanitize_text_field($_POST['step_label']));
         }
     }
 
