@@ -93,6 +93,18 @@ function estatein_register_post_types() {
         'supports' => array('title', 'editor', 'custom-fields'),
         'show_in_rest' => true,
     ));
+
+    // Feature CPT
+    register_post_type('feature', array(
+        'labels' => array(
+            'name' => __('Features', 'estatein'),
+            'singular_name' => __('Feature', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-star-filled',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
 }
 add_action('init', 'estatein_register_post_types');
 
@@ -126,8 +138,78 @@ function estatein_add_property_metaboxes() {
         'normal',
         'high'
     );
+
+    add_meta_box(
+        'feature_details',
+        __('Feature Details', 'estatein'),
+        'estatein_feature_details_callback',
+        'feature',
+        'normal',
+        'high'
+    );
+
+    // Hero Meta Box for Front Page
+    $post_id = isset($_GET['post']) ? $_GET['post'] : (isset($_POST['post_ID']) ? $_POST['post_ID'] : false);
+    if ($post_id && get_post_field('post_name', $post_id) === 'home' || (isset($_GET['post']) && get_page_template_slug($_GET['post']) === 'front-page.php')) {
+        add_meta_box(
+            'hero_details',
+            __('Hero Section Settings', 'estatein'),
+            'estatein_hero_details_callback',
+            'page',
+            'normal',
+            'high'
+        );
+    }
 }
 add_action('add_meta_boxes', 'estatein_add_property_metaboxes');
+
+function estatein_feature_details_callback($post) {
+    wp_nonce_field('estatein_feature_details_nonce', 'estatein_feature_details_nonce_field');
+    $icon = get_post_meta($post->ID, '_feature_icon', true);
+    ?>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Lucide Icon Name (e.g. home, dollar-sign, settings)', 'estatein'); ?></label>
+        <input type="text" name="feature_icon" value="<?php echo esc_attr($icon); ?>" style="width:100%;" />
+    </div>
+    <?php
+}
+
+function estatein_hero_details_callback($post) {
+    wp_nonce_field('estatein_hero_details_nonce', 'estatein_hero_details_nonce_field');
+    $hero_title_gray = get_post_meta($post->ID, '_hero_title_gray', true);
+    $stat1_val = get_post_meta($post->ID, '_hero_stat1_val', true);
+    $stat1_lbl = get_post_meta($post->ID, '_hero_stat1_lbl', true);
+    $stat2_val = get_post_meta($post->ID, '_hero_stat2_val', true);
+    $stat2_lbl = get_post_meta($post->ID, '_hero_stat2_lbl', true);
+    $stat3_val = get_post_meta($post->ID, '_hero_stat3_val', true);
+    $stat3_lbl = get_post_meta($post->ID, '_hero_stat3_lbl', true);
+    ?>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Hero Title Gray Text (e.g. Property with Estatein)', 'estatein'); ?></label>
+        <input type="text" name="hero_title_gray" value="<?php echo esc_attr($hero_title_gray); ?>" style="width:100%;" />
+    </div>
+    <div style="display: flex; gap: 20px;">
+        <div style="flex: 1;">
+            <label><?php _e('Stat 1 Value', 'estatein'); ?></label>
+            <input type="text" name="hero_stat1_val" value="<?php echo esc_attr($stat1_val); ?>" style="width:100%;" />
+            <label><?php _e('Stat 1 Label', 'estatein'); ?></label>
+            <input type="text" name="hero_stat1_lbl" value="<?php echo esc_attr($stat1_lbl); ?>" style="width:100%;" />
+        </div>
+        <div style="flex: 1;">
+            <label><?php _e('Stat 2 Value', 'estatein'); ?></label>
+            <input type="text" name="hero_stat2_val" value="<?php echo esc_attr($stat2_val); ?>" style="width:100%;" />
+            <label><?php _e('Stat 2 Label', 'estatein'); ?></label>
+            <input type="text" name="hero_stat2_lbl" value="<?php echo esc_attr($stat2_lbl); ?>" style="width:100%;" />
+        </div>
+        <div style="flex: 1;">
+            <label><?php _e('Stat 3 Value', 'estatein'); ?></label>
+            <input type="text" name="hero_stat3_val" value="<?php echo esc_attr($stat3_val); ?>" style="width:100%;" />
+            <label><?php _e('Stat 3 Label', 'estatein'); ?></label>
+            <input type="text" name="hero_stat3_lbl" value="<?php echo esc_attr($stat3_lbl); ?>" style="width:100%;" />
+        </div>
+    </div>
+    <?php
+}
 
 function estatein_testimonial_details_callback($post) {
     wp_nonce_field('estatein_testimonial_details_nonce', 'estatein_testimonial_details_nonce_field');
@@ -240,6 +322,23 @@ function estatein_save_property_details($post_id) {
         }
         if (isset($_POST['faq_btn_link'])) {
             update_post_meta($post_id, '_faq_btn_link', sanitize_text_field($_POST['faq_btn_link']));
+        }
+    }
+
+    // Feature Meta
+    if (isset($_POST['estatein_feature_details_nonce_field']) && wp_verify_nonce($_POST['estatein_feature_details_nonce_field'], 'estatein_feature_details_nonce')) {
+        if (isset($_POST['feature_icon'])) {
+            update_post_meta($post_id, '_feature_icon', sanitize_text_field($_POST['feature_icon']));
+        }
+    }
+
+    // Hero Meta
+    if (isset($_POST['estatein_hero_details_nonce_field']) && wp_verify_nonce($_POST['estatein_hero_details_nonce_field'], 'estatein_hero_details_nonce')) {
+        $hero_fields = ['hero_title_gray', 'hero_stat1_val', 'hero_stat1_lbl', 'hero_stat2_val', 'hero_stat2_lbl', 'hero_stat3_val', 'hero_stat3_lbl'];
+        foreach ($hero_fields as $field) {
+            if (isset($_POST[$field])) {
+                update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
+            }
         }
     }
 }

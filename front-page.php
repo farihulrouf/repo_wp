@@ -7,18 +7,28 @@ get_header(); ?>
 
 <main>
     <!-- Hero Section -->
+    <?php
+    $hero_title_gray = get_post_meta(get_the_ID(), '_hero_title_gray', true) ?: 'Property with Estatein';
+    $stat1_val = get_post_meta(get_the_ID(), '_hero_stat1_val', true) ?: '200+';
+    $stat1_lbl = get_post_meta(get_the_ID(), '_hero_stat1_lbl', true) ?: 'Happy Customers';
+    $stat2_val = get_post_meta(get_the_ID(), '_hero_stat2_val', true) ?: '10k+';
+    $stat2_lbl = get_post_meta(get_the_ID(), '_hero_stat2_lbl', true) ?: 'Properties For Clients';
+    $stat3_val = get_post_meta(get_the_ID(), '_hero_stat3_val', true) ?: '16+';
+    $stat3_lbl = get_post_meta(get_the_ID(), '_hero_stat3_lbl', true) ?: 'Years of Experience';
+    $hero_img = get_the_post_thumbnail_url(get_the_ID(), 'full') ?: 'https://picsum.photos/seed/estate/800/800';
+    ?>
     <section class="relative pt-48 pb-20 overflow-hidden">
         <div class="hero-glow"></div>
         <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="text-center lg:text-left">
                     <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6">
-                        Discover Your Dream <br />
-                        <span class="text-[#B3B3B3]">Property with Estatein</span>
+                        <?php the_title(); ?> <br />
+                        <span class="text-[#B3B3B3]"><?php echo esc_html($hero_title_gray); ?></span>
                     </h1>
-                    <p class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-lg mx-auto lg:mx-0">
-                        Your journey to finding the perfect property begins here. Explore our listings to find the home that matches your dreams.
-                    </p>
+                    <div class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-lg mx-auto lg:mx-0">
+                        <?php the_content(); ?>
+                    </div>
                     
                     <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-16">
                         <button class="h-14 px-8 rounded-xl border border-[#262626] font-medium hover:bg-[#1E1E1E] transition-colors">
@@ -31,23 +41,23 @@ get_header(); ?>
                     
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
                         <div class="glass-card p-4 sm:p-6">
-                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1">200+</div>
-                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider">Happy Customers</div>
+                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1"><?php echo esc_html($stat1_val); ?></div>
+                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider"><?php echo esc_html($stat1_lbl); ?></div>
                         </div>
                         <div class="glass-card p-4 sm:p-6">
-                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1">10k+</div>
-                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider">Properties For Clients</div>
+                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1"><?php echo esc_html($stat2_val); ?></div>
+                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider"><?php echo esc_html($stat2_lbl); ?></div>
                         </div>
                         <div class="glass-card p-4 sm:p-6 col-span-2 sm:col-span-1">
-                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1">16+</div>
-                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider">Years of Experience</div>
+                            <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1"><?php echo esc_html($stat3_val); ?></div>
+                            <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider"><?php echo esc_html($stat3_lbl); ?></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="relative mt-12 lg:mt-0">
                     <div class="relative rounded-3xl overflow-hidden aspect-square max-w-2xl mx-auto border border-[#262626]">
-                        <img src="https://picsum.photos/seed/estate/800/800" alt="Modern Building" class="w-full h-full object-cover">
+                        <img src="<?php echo esc_url($hero_img); ?>" alt="Modern Building" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/80 to-transparent"></div>
                     </div>
                     
@@ -75,46 +85,33 @@ get_header(); ?>
     <section class="py-10">
         <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
-                <div class="glass-card p-8 group cursor-pointer hover:border-[#703BF7]/50 transition-all relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="w-12 h-12 rounded-full bg-[#703BF7]/10 flex items-center justify-center text-[#703BF7] group-hover:bg-[#703BF7] group-hover:text-white transition-all">
-                            <i data-lucide="home" class="w-6 h-6"></i>
+                <?php
+                $features_query = new WP_Query(array(
+                    'post_type' => 'feature',
+                    'posts_per_page' => 4,
+                ));
+
+                if ($features_query->have_posts()) :
+                    while ($features_query->have_posts()) : $features_query->the_post();
+                        $icon = get_post_meta(get_the_ID(), '_feature_icon', true) ?: 'home';
+                        ?>
+                        <div class="glass-card p-8 group cursor-pointer hover:border-[#703BF7]/50 transition-all relative overflow-hidden">
+                            <div class="flex justify-between items-start mb-8">
+                                <div class="w-12 h-12 rounded-full bg-[#703BF7]/10 flex items-center justify-center text-[#703BF7] group-hover:bg-[#703BF7] group-hover:text-white transition-all">
+                                    <i data-lucide="<?php echo esc_attr($icon); ?>" class="w-6 h-6"></i>
+                                </div>
+                                <i data-lucide="arrow-up-right" class="w-5 h-5 text-[#999999] group-hover:text-[#703BF7] transition-colors"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2 group-hover:text-[#703BF7] transition-colors"><?php the_title(); ?></h3>
+                            <div class="text-sm text-[#999999] leading-relaxed"><?php the_content(); ?></div>
                         </div>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-[#B3B3B3] group-hover:text-[#703BF7] transition-colors"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2 group-hover:text-[#703BF7] transition-colors">Find Your Dream Home</h3>
-                    <p class="text-sm text-[#B3B3B3] leading-relaxed">Explore our wide range of properties in the best locations.</p>
-                </div>
-                <div class="glass-card p-8 group cursor-pointer hover:border-[#703BF7]/50 transition-all relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="w-12 h-12 rounded-full bg-[#703BF7]/10 flex items-center justify-center text-[#703BF7] group-hover:bg-[#703BF7] group-hover:text-white transition-all">
-                            <i data-lucide="dollar-sign" class="w-6 h-6"></i>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-[#B3B3B3] group-hover:text-[#703BF7] transition-colors"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2 group-hover:text-[#703BF7] transition-colors">Unlock Property Value</h3>
-                    <p class="text-sm text-[#B3B3B3] leading-relaxed">Get the best market value for your property with our experts.</p>
-                </div>
-                <div class="glass-card p-8 group cursor-pointer hover:border-[#703BF7]/50 transition-all relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="w-12 h-12 rounded-full bg-[#703BF7]/10 flex items-center justify-center text-[#703BF7] group-hover:bg-[#703BF7] group-hover:text-white transition-all">
-                            <i data-lucide="settings" class="w-6 h-6"></i>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-[#B3B3B3] group-hover:text-[#703BF7] transition-colors"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2 group-hover:text-[#703BF7] transition-colors">Effortless Management</h3>
-                    <p class="text-sm text-[#B3B3B3] leading-relaxed">We handle the details so you can enjoy the rewards.</p>
-                </div>
-                <div class="glass-card p-8 group cursor-pointer hover:border-[#703BF7]/50 transition-all relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-8">
-                        <div class="w-12 h-12 rounded-full bg-[#703BF7]/10 flex items-center justify-center text-[#703BF7] group-hover:bg-[#703BF7] group-hover:text-white transition-all">
-                            <i data-lucide="line-chart" class="w-6 h-6"></i>
-                        </div>
-                        <i data-lucide="arrow-up-right" class="w-5 h-5 text-[#B3B3B3] group-hover:text-[#703BF7] transition-colors"></i>
-                    </div>
-                    <h3 class="text-lg font-semibold mb-2 group-hover:text-[#703BF7] transition-colors">Smart Investments</h3>
-                    <p class="text-sm text-[#B3B3B3] leading-relaxed">Data-driven insights for your real estate portfolio.</p>
-                </div>
+                    <?php
+                    endwhile;
+                    wp_reset_postdata();
+                else :
+                    echo '<p class="text-[#B3B3B3] p-6">No features found. Please add some in the dashboard.</p>';
+                endif;
+                ?>
             </div>
         </div>
     </section>
