@@ -8,8 +8,6 @@ get_header(); ?>
 <main class="pt-40">
     <!-- Our Journey -->
     <?php
-    $hero_title_gray = get_post_meta(get_the_ID(), '_hero_title_gray', true);
-    $hide_title = get_post_meta(get_the_ID(), '_hero_hide_title', true);
     $stat1_val = get_post_meta(get_the_ID(), '_hero_stat1_val', true) ?: '200+';
     $stat1_lbl = get_post_meta(get_the_ID(), '_hero_stat1_lbl', true) ?: 'Happy Customers';
     $stat2_val = get_post_meta(get_the_ID(), '_hero_stat2_val', true) ?: '10k+';
@@ -27,17 +25,7 @@ get_header(); ?>
                         <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
                         <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
                     </div>
-                    <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6">
-                        <?php if (!$hide_title) : ?>
-                            <span class="text-white"><?php the_title(); ?></span>
-                        <?php endif; ?>
-                        <?php if ($hero_title_gray) : ?>
-                            <span class="text-[#999999]"><?php echo esc_html($hero_title_gray); ?></span>
-                        <?php endif; ?>
-                        <?php if ($hide_title && !$hero_title_gray) : ?>
-                            <span class="text-white"><?php the_title(); ?></span>
-                        <?php endif; ?>
-                    </h1>
+                    <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6"><?php the_title(); ?></h1>
                     <div class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-2xl mx-auto lg:mx-0">
                         <?php 
                         if (have_posts()) :
@@ -72,6 +60,10 @@ get_header(); ?>
     </section>
 
     <!-- Our Values -->
+    <?php
+    $value_title = get_post_meta(get_the_ID(), '_value_title', true) ?: 'Our Values';
+    $value_desc = get_post_meta(get_the_ID(), '_value_desc', true) ?: 'Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary.';
+    ?>
     <section class="py-20">
         <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-3 gap-12">
@@ -81,49 +73,40 @@ get_header(); ?>
                         <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
                         <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
                     </div>
-                    <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6">Our Values</h2>
+                    <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6"><?php echo esc_html($value_title); ?></h2>
                     <p class="text-[#B3B3B3] leading-relaxed">
-                        Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary.
+                        <?php echo nl2br(esc_html($value_desc)); ?>
                     </p>
                 </div>
                 <div class="lg:col-span-2">
                     <div class="glass-card p-8 sm:p-12 grid sm:grid-cols-2 gap-8">
-                        <div>
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 rounded-full border border-[#703BF7] flex items-center justify-center text-[#703BF7]">
-                                    <i data-lucide="star" class="w-6 h-6"></i>
+                        <?php
+                        $values_query = new WP_Query(array(
+                            'post_type' => 'value',
+                            'posts_per_page' => -1,
+                            'order' => 'ASC'
+                        ));
+
+                        if ($values_query->have_posts()) :
+                            while ($values_query->have_posts()) : $values_query->the_post();
+                                $icon = get_post_meta(get_the_ID(), '_value_icon', true) ?: 'star';
+                                ?>
+                                <div>
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <div class="w-12 h-12 rounded-full border border-[#703BF7] flex items-center justify-center text-[#703BF7]">
+                                            <i data-lucide="<?php echo esc_attr($icon); ?>" class="w-6 h-6"></i>
+                                        </div>
+                                        <h3 class="text-xl font-bold"><?php the_title(); ?></h3>
+                                    </div>
+                                    <div class="text-[#999999] text-sm">
+                                        <?php the_content(); ?>
+                                    </div>
                                 </div>
-                                <h3 class="text-xl font-bold">Trust</h3>
-                            </div>
-                            <p class="text-[#999999] text-sm">Trust is the cornerstone of every successful real estate transaction.</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 rounded-full border border-[#703BF7] flex items-center justify-center text-[#703BF7]">
-                                    <i data-lucide="award" class="w-6 h-6"></i>
-                                </div>
-                                <h3 class="text-xl font-bold">Excellence</h3>
-                            </div>
-                            <p class="text-[#999999] text-sm">We set the bar high for ourselves. From the properties we list to the services we provide.</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 rounded-full border border-[#703BF7] flex items-center justify-center text-[#703BF7]">
-                                    <i data-lucide="users" class="w-6 h-6"></i>
-                                </div>
-                                <h3 class="text-xl font-bold">Client-Centric</h3>
-                            </div>
-                            <p class="text-[#999999] text-sm">Your dreams and needs are at the center of our universe. We listen, understand.</p>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-4 mb-4">
-                                <div class="w-12 h-12 rounded-full border border-[#703BF7] flex items-center justify-center text-[#703BF7]">
-                                    <i data-lucide="shield-check" class="w-6 h-6"></i>
-                                </div>
-                                <h3 class="text-xl font-bold">Our Commitment</h3>
-                            </div>
-                            <p class="text-[#999999] text-sm">We are dedicated to providing you with the highest level of service, professionalism, and support.</p>
-                        </div>
+                                <?php
+                            endwhile;
+                            wp_reset_postdata();
+                        endif;
+                        ?>
                     </div>
                 </div>
             </div>

@@ -161,6 +161,18 @@ function estatein_register_post_types() {
         'supports' => array('title', 'editor', 'custom-fields'),
         'show_in_rest' => true,
     ));
+
+    // Value CPT
+    register_post_type('value', array(
+        'labels' => array(
+            'name' => __('Values', 'estatein'),
+            'singular_name' => __('Value', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-heart',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
 }
 add_action('init', 'estatein_register_post_types');
 
@@ -274,6 +286,15 @@ function estatein_add_property_metaboxes() {
         'high'
     );
 
+    add_meta_box(
+        'value_details',
+        __('Value Details', 'estatein'),
+        'estatein_value_details_callback',
+        'value',
+        'normal',
+        'high'
+    );
+
     // Hero Meta Box for Front Page
     add_meta_box(
         'hero_details',
@@ -355,6 +376,17 @@ function estatein_experience_step_details_callback($post) {
     <?php
 }
 
+function estatein_value_details_callback($post) {
+    wp_nonce_field('estatein_value_details_nonce', 'estatein_value_details_nonce_field');
+    $icon = get_post_meta($post->ID, '_value_icon', true);
+    ?>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Lucide Icon Name (e.g. star, award, users)', 'estatein'); ?></label>
+        <input type="text" name="value_icon" value="<?php echo esc_attr($icon); ?>" style="width:100%;" />
+    </div>
+    <?php
+}
+
 function estatein_hero_details_callback($post) {
     wp_nonce_field('estatein_hero_details_nonce', 'estatein_hero_details_nonce_field');
     $hero_title_gray = get_post_meta($post->ID, '_hero_title_gray', true);
@@ -414,6 +446,22 @@ function estatein_hero_details_callback($post) {
             <input type="text" name="hero_btn2_text" value="<?php echo esc_attr($hero_btn2_text); ?>" style="width:100%;" />
             <label><?php _e('Hero Button 2 Link', 'estatein'); ?></label>
             <input type="text" name="hero_btn2_link" value="<?php echo esc_attr($hero_btn2_link); ?>" style="width:100%;" />
+        </div>
+    </div>
+
+    <?php
+    $value_title = get_post_meta($post->ID, '_value_title', true);
+    $value_desc = get_post_meta($post->ID, '_value_desc', true);
+    ?>
+    <div style="border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px;">
+        <h3><?php _e('Our Values Section Settings', 'estatein'); ?></h3>
+        <div style="padding: 10px 0;">
+            <label style="display:block; margin-bottom:5px;"><?php _e('Section Title', 'estatein'); ?></label>
+            <input type="text" name="value_title" value="<?php echo esc_attr($value_title); ?>" style="width:100%;" />
+        </div>
+        <div style="padding: 10px 0;">
+            <label style="display:block; margin-bottom:5px;"><?php _e('Section Description', 'estatein'); ?></label>
+            <textarea name="value_desc" style="width:100%; height: 80px;"><?php echo esc_textarea($value_desc); ?></textarea>
         </div>
     </div>
 
@@ -587,6 +635,13 @@ function estatein_save_property_details($post_id) {
         }
     }
 
+    // Value Meta
+    if (isset($_POST['estatein_value_details_nonce_field']) && wp_verify_nonce($_POST['estatein_value_details_nonce_field'], 'estatein_value_details_nonce')) {
+        if (isset($_POST['value_icon'])) {
+            update_post_meta($post_id, '_value_icon', sanitize_text_field($_POST['value_icon']));
+        }
+    }
+
     // Hero Meta
     if (isset($_POST['estatein_hero_details_nonce_field']) && wp_verify_nonce($_POST['estatein_hero_details_nonce_field'], 'estatein_hero_details_nonce')) {
         $hero_fields = [
@@ -597,6 +652,7 @@ function estatein_save_property_details($post_id) {
             'hero_btn1_text', 'hero_btn1_link',
             'hero_btn2_text', 'hero_btn2_link',
             'hero_hide_title',
+            'value_title', 'value_desc',
             'cta_title', 'cta_btn_text', 'cta_btn_link'
         ];
         foreach ($hero_fields as $field) {
