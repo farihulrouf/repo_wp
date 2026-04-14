@@ -8,6 +8,8 @@ get_header(); ?>
 <main class="pt-40">
     <!-- Our Journey -->
     <?php
+    $hero_title_gray = get_post_meta(get_the_ID(), '_hero_title_gray', true);
+    $hide_title = get_post_meta(get_the_ID(), '_hero_hide_title', true);
     $stat1_val = get_post_meta(get_the_ID(), '_hero_stat1_val', true) ?: '200+';
     $stat1_lbl = get_post_meta(get_the_ID(), '_hero_stat1_lbl', true) ?: 'Happy Customers';
     $stat2_val = get_post_meta(get_the_ID(), '_hero_stat2_val', true) ?: '10k+';
@@ -25,7 +27,17 @@ get_header(); ?>
                         <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
                         <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
                     </div>
-                    <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6"><?php the_title(); ?></h1>
+                    <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6">
+                        <?php if (!$hide_title) : ?>
+                            <span class="text-white"><?php the_title(); ?></span>
+                        <?php endif; ?>
+                        <?php if ($hero_title_gray) : ?>
+                            <span class="text-[#999999]"><?php echo esc_html($hero_title_gray); ?></span>
+                        <?php endif; ?>
+                        <?php if ($hide_title && !$hero_title_gray) : ?>
+                            <span class="text-white"><?php the_title(); ?></span>
+                        <?php endif; ?>
+                    </h1>
                     <div class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-2xl mx-auto lg:mx-0">
                         <?php 
                         if (have_posts()) :
