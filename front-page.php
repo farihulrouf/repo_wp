@@ -16,7 +16,7 @@ get_header(); ?>
     $stat3_val = get_post_meta(get_the_ID(), '_hero_stat3_val', true) ?: '16+';
     $stat3_lbl = get_post_meta(get_the_ID(), '_hero_stat3_lbl', true) ?: 'Years of Experience';
     $hero_btn1_text = get_post_meta(get_the_ID(), '_hero_btn1_text', true) ?: 'Learn More';
-    $hero_btn1_link = get_post_meta(get_the_ID(), '_hero_btn1_link', true) ?: '#';
+    $hero_btn1_link = get_post_meta(get_the_ID(), '_hero_btn1_link', true) ?: home_url('/about');
     $hero_btn2_text = get_post_meta(get_the_ID(), '_hero_btn2_text', true) ?: 'Browse Properties';
     $hero_btn2_link = get_post_meta(get_the_ID(), '_hero_btn2_link', true) ?: '#';
     $hero_hide_title = get_post_meta(get_the_ID(), '_hero_hide_title', true);
