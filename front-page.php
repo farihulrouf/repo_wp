@@ -15,6 +15,11 @@ get_header(); ?>
     $stat2_lbl = get_post_meta(get_the_ID(), '_hero_stat2_lbl', true) ?: 'Properties For Clients';
     $stat3_val = get_post_meta(get_the_ID(), '_hero_stat3_val', true) ?: '16+';
     $stat3_lbl = get_post_meta(get_the_ID(), '_hero_stat3_lbl', true) ?: 'Years of Experience';
+    $hero_btn1_text = get_post_meta(get_the_ID(), '_hero_btn1_text', true) ?: 'Learn More';
+    $hero_btn1_link = get_post_meta(get_the_ID(), '_hero_btn1_link', true) ?: '#';
+    $hero_btn2_text = get_post_meta(get_the_ID(), '_hero_btn2_text', true) ?: 'Browse Properties';
+    $hero_btn2_link = get_post_meta(get_the_ID(), '_hero_btn2_link', true) ?: '#';
+    $hero_hide_title = get_post_meta(get_the_ID(), '_hero_hide_title', true);
     $hero_img = get_the_post_thumbnail_url(get_the_ID(), 'full') ?: 'https://picsum.photos/seed/estate/800/800';
     ?>
     <section class="relative pt-48 pb-20 overflow-hidden">
@@ -23,20 +28,30 @@ get_header(); ?>
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="text-center lg:text-left">
                     <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6">
-                        <?php the_title(); ?> <br />
+                        <?php if ($hero_hide_title !== '1') : ?>
+                            <?php echo get_the_title() ?: 'Discover Your Dream'; ?> <br />
+                        <?php endif; ?>
                         <span class="text-[#B3B3B3]"><?php echo esc_html($hero_title_gray); ?></span>
                     </h1>
                     <div class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-lg mx-auto lg:mx-0">
-                        <?php the_content(); ?>
+                        <?php 
+                        if (have_posts()) :
+                            while (have_posts()) : the_post();
+                                the_content();
+                            endwhile;
+                        else :
+                            echo "Your journey to finding the perfect property begins here. Explore our listings to find the home that matches your dreams.";
+                        endif;
+                        ?>
                     </div>
                     
                     <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-16">
-                        <button class="h-14 px-8 rounded-xl border border-[#262626] font-medium hover:bg-[#1E1E1E] transition-colors">
-                            Learn More
-                        </button>
-                        <button class="h-14 px-8 rounded-xl bg-[#703BF7] font-medium hover:bg-[#5d2ee0] transition-colors">
-                            Browse Properties
-                        </button>
+                        <a href="<?php echo esc_url($hero_btn1_link); ?>" class="h-14 px-8 rounded-xl border border-[#262626] font-medium hover:bg-[#1E1E1E] transition-colors flex items-center justify-center">
+                            <?php echo esc_html($hero_btn1_text); ?>
+                        </a>
+                        <a href="<?php echo esc_url($hero_btn2_link); ?>" class="h-14 px-8 rounded-xl bg-[#703BF7] font-medium hover:bg-[#5d2ee0] transition-colors flex items-center justify-center">
+                            <?php echo esc_html($hero_btn2_text); ?>
+                        </a>
                     </div>
                     
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -67,7 +82,10 @@ get_header(); ?>
                                 <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
                                 <text class="text-[8px] uppercase tracking-[0.2em] fill-white font-medium">
                                     <textPath xlink:href="#circlePath">
-                                        Discover Your Dream Property • Discover Your Dream Property • 
+                                        <?php 
+                                        $circle_text = get_the_title() . ' • ' . get_the_title() . ' • ';
+                                        echo esc_html($circle_text); 
+                                        ?>
                                     </textPath>
                                 </text>
                             </svg>
@@ -325,15 +343,21 @@ get_header(); ?>
     </section>
 
     <!-- CTA Section -->
+    <?php
+    $cta_title = get_post_meta(get_the_ID(), '_cta_title', true) ?: 'Start Your Real Estate Journey Today';
+    $cta_desc = get_post_meta(get_the_ID(), '_cta_desc', true) ?: "Your dream property is just a click away. Whether you're looking for a new home, a strategic investment, or expert real estate advice, Estatein is here to assist you.";
+    $cta_btn_text = get_post_meta(get_the_ID(), '_cta_btn_text', true) ?: 'Explore Properties';
+    $cta_btn_link = get_post_meta(get_the_ID(), '_cta_btn_link', true) ?: '#';
+    ?>
     <section class="py-20">
         <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="relative rounded-3xl overflow-hidden p-12 lg:p-20 border border-[#262626] bg-gradient-to-br from-[#1A1A1A] to-[#0F0F0F]">
                 <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
                     <div class="max-w-2xl text-center lg:text-left">
-                        <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6">Start Your Real Estate Journey Today</h2>
-                        <p class="text-[#B3B3B3] text-lg">Your dream property is just a click away. Whether you're looking for a new home, a strategic investment, or expert real estate advice, Estatein is here to assist you.</p>
+                        <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-6"><?php echo esc_html($cta_title); ?></h2>
+                        <p class="text-[#999999] text-lg"><?php echo esc_html($cta_desc); ?></p>
                     </div>
-                    <button class="h-16 px-10 rounded-xl bg-[#703BF7] font-bold text-lg hover:bg-[#5d2ee0] transition-all">Explore Properties</button>
+                    <a href="<?php echo esc_url($cta_btn_link); ?>" class="h-16 px-10 rounded-xl bg-[#703BF7] font-bold text-lg hover:bg-[#5d2ee0] transition-all flex items-center justify-center"><?php echo esc_html($cta_btn_text); ?></a>
                 </div>
             </div>
         </div>

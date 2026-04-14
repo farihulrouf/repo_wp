@@ -13,6 +13,14 @@ function estatein_setup() {
     // Enable support for Post Thumbnails on posts and pages.
     add_theme_support('post-thumbnails');
 
+    // Add support for Custom Logo
+    add_theme_support('custom-logo', array(
+        'height'      => 100,
+        'width'       => 400,
+        'flex-height' => true,
+        'flex-width'  => true,
+    ));
+
     // This theme uses wp_nav_menu() in one location.
     register_nav_menus(array(
         'menu-1' => esc_html__('Primary', 'estatein'),
@@ -109,6 +117,49 @@ function estatein_register_post_types() {
 add_action('init', 'estatein_register_post_types');
 
 /**
+ * Register widget area.
+ */
+function estatein_widgets_init() {
+    register_sidebar(array(
+        'name'          => esc_html__('Footer Column 1', 'estatein'),
+        'id'            => 'footer-1',
+        'description'   => esc_html__('Add widgets here.', 'estatein'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="text-[#999999] font-medium mb-6">',
+        'after_title'   => '</h4>',
+    ));
+    register_sidebar(array(
+        'name'          => esc_html__('Footer Column 2', 'estatein'),
+        'id'            => 'footer-2',
+        'description'   => esc_html__('Add widgets here.', 'estatein'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="text-[#999999] font-medium mb-6">',
+        'after_title'   => '</h4>',
+    ));
+    register_sidebar(array(
+        'name'          => esc_html__('Footer Column 3', 'estatein'),
+        'id'            => 'footer-3',
+        'description'   => esc_html__('Add widgets here.', 'estatein'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="text-[#999999] font-medium mb-6">',
+        'after_title'   => '</h4>',
+    ));
+    register_sidebar(array(
+        'name'          => esc_html__('Footer Column 4', 'estatein'),
+        'id'            => 'footer-4',
+        'description'   => esc_html__('Add widgets here.', 'estatein'),
+        'before_widget' => '<div id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</div>',
+        'before_title'  => '<h4 class="text-[#999999] font-medium mb-6">',
+        'after_title'   => '</h4>',
+    ));
+}
+add_action('widgets_init', 'estatein_widgets_init');
+
+/**
  * Add Meta Boxes for Property Details
  */
 function estatein_add_property_metaboxes() {
@@ -149,17 +200,14 @@ function estatein_add_property_metaboxes() {
     );
 
     // Hero Meta Box for Front Page
-    $post_id = isset($_GET['post']) ? $_GET['post'] : (isset($_POST['post_ID']) ? $_POST['post_ID'] : false);
-    if ($post_id && get_post_field('post_name', $post_id) === 'home' || (isset($_GET['post']) && get_page_template_slug($_GET['post']) === 'front-page.php')) {
-        add_meta_box(
-            'hero_details',
-            __('Hero Section Settings', 'estatein'),
-            'estatein_hero_details_callback',
-            'page',
-            'normal',
-            'high'
-        );
-    }
+    add_meta_box(
+        'hero_details',
+        __('Hero & CTA Section Settings', 'estatein'),
+        'estatein_hero_details_callback',
+        'page',
+        'normal',
+        'high'
+    );
 }
 add_action('add_meta_boxes', 'estatein_add_property_metaboxes');
 
@@ -183,12 +231,24 @@ function estatein_hero_details_callback($post) {
     $stat2_lbl = get_post_meta($post->ID, '_hero_stat2_lbl', true);
     $stat3_val = get_post_meta($post->ID, '_hero_stat3_val', true);
     $stat3_lbl = get_post_meta($post->ID, '_hero_stat3_lbl', true);
+    $hero_btn1_text = get_post_meta($post->ID, '_hero_btn1_text', true);
+    $hero_btn1_link = get_post_meta($post->ID, '_hero_btn1_link', true);
+    $hero_btn2_text = get_post_meta($post->ID, '_hero_btn2_text', true);
+    $hero_btn2_link = get_post_meta($post->ID, '_hero_btn2_link', true);
+    $hero_hide_title = get_post_meta($post->ID, '_hero_hide_title', true);
     ?>
+    <div style="padding: 10px 0; background: #f9f9f9; border: 1px solid #ddd; padding: 10px; margin-bottom: 20px;">
+        <label>
+            <input type="checkbox" name="hero_hide_title" value="1" <?php checked($hero_hide_title, '1'); ?> />
+            <?php _e('Hide Main Title (Page Title) in Hero', 'estatein'); ?>
+        </label>
+        <p class="description"><?php _e('Check this if you want to put the whole title in the "Gray Text" field below.', 'estatein'); ?></p>
+    </div>
     <div style="padding: 10px 0;">
         <label style="display:block; margin-bottom:5px;"><?php _e('Hero Title Gray Text (e.g. Property with Estatein)', 'estatein'); ?></label>
         <input type="text" name="hero_title_gray" value="<?php echo esc_attr($hero_title_gray); ?>" style="width:100%;" />
     </div>
-    <div style="display: flex; gap: 20px;">
+    <div style="display: flex; gap: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px;">
         <div style="flex: 1;">
             <label><?php _e('Stat 1 Value', 'estatein'); ?></label>
             <input type="text" name="hero_stat1_val" value="<?php echo esc_attr($stat1_val); ?>" style="width:100%;" />
@@ -206,6 +266,47 @@ function estatein_hero_details_callback($post) {
             <input type="text" name="hero_stat3_val" value="<?php echo esc_attr($stat3_val); ?>" style="width:100%;" />
             <label><?php _e('Stat 3 Label', 'estatein'); ?></label>
             <input type="text" name="hero_stat3_lbl" value="<?php echo esc_attr($stat3_lbl); ?>" style="width:100%;" />
+        </div>
+    </div>
+
+    <div style="display: flex; gap: 20px; border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 20px;">
+        <div style="flex: 1;">
+            <label><?php _e('Hero Button 1 Text', 'estatein'); ?></label>
+            <input type="text" name="hero_btn1_text" value="<?php echo esc_attr($hero_btn1_text); ?>" style="width:100%;" />
+            <label><?php _e('Hero Button 1 Link', 'estatein'); ?></label>
+            <input type="text" name="hero_btn1_link" value="<?php echo esc_attr($hero_btn1_link); ?>" style="width:100%;" />
+        </div>
+        <div style="flex: 1;">
+            <label><?php _e('Hero Button 2 Text', 'estatein'); ?></label>
+            <input type="text" name="hero_btn2_text" value="<?php echo esc_attr($hero_btn2_text); ?>" style="width:100%;" />
+            <label><?php _e('Hero Button 2 Link', 'estatein'); ?></label>
+            <input type="text" name="hero_btn2_link" value="<?php echo esc_attr($hero_btn2_link); ?>" style="width:100%;" />
+        </div>
+    </div>
+
+    <?php
+    $cta_title = get_post_meta($post->ID, '_cta_title', true);
+    $cta_desc = get_post_meta($post->ID, '_cta_desc', true);
+    $cta_btn_text = get_post_meta($post->ID, '_cta_btn_text', true);
+    $cta_btn_link = get_post_meta($post->ID, '_cta_btn_link', true);
+    ?>
+    <h3><?php _e('CTA Section Settings', 'estatein'); ?></h3>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('CTA Title', 'estatein'); ?></label>
+        <input type="text" name="cta_title" value="<?php echo esc_attr($cta_title); ?>" style="width:100%;" />
+    </div>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('CTA Description', 'estatein'); ?></label>
+        <textarea name="cta_desc" style="width:100%; height: 100px;"><?php echo esc_textarea($cta_desc); ?></textarea>
+    </div>
+    <div style="display: flex; gap: 20px;">
+        <div style="flex: 1;">
+            <label><?php _e('Button Text', 'estatein'); ?></label>
+            <input type="text" name="cta_btn_text" value="<?php echo esc_attr($cta_btn_text); ?>" style="width:100%;" />
+        </div>
+        <div style="flex: 1;">
+            <label><?php _e('Button Link', 'estatein'); ?></label>
+            <input type="text" name="cta_btn_link" value="<?php echo esc_attr($cta_btn_link); ?>" style="width:100%;" />
         </div>
     </div>
     <?php
@@ -274,14 +375,6 @@ function estatein_property_details_callback($post) {
 }
 
 function estatein_save_property_details($post_id) {
-    // Check if nonce is set
-    if (!isset($_POST['estatein_property_details_nonce_field'])) {
-        return;
-    }
-    // Verify nonce
-    if (!wp_verify_nonce($_POST['estatein_property_details_nonce_field'], 'estatein_property_details_nonce')) {
-        return;
-    }
     // Check for autosave
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return;
@@ -291,18 +384,20 @@ function estatein_save_property_details($post_id) {
         return;
     }
 
-    // Save fields
-    if (isset($_POST['property_price'])) {
-        update_post_meta($post_id, '_property_price', sanitize_text_field($_POST['property_price']));
-    }
-    if (isset($_POST['property_bedrooms'])) {
-        update_post_meta($post_id, '_property_bedrooms', sanitize_text_field($_POST['property_bedrooms']));
-    }
-    if (isset($_POST['property_bathrooms'])) {
-        update_post_meta($post_id, '_property_bathrooms', sanitize_text_field($_POST['property_bathrooms']));
-    }
-    if (isset($_POST['property_type'])) {
-        update_post_meta($post_id, '_property_type', sanitize_text_field($_POST['property_type']));
+    // Property Meta
+    if (isset($_POST['estatein_property_details_nonce_field']) && wp_verify_nonce($_POST['estatein_property_details_nonce_field'], 'estatein_property_details_nonce')) {
+        if (isset($_POST['property_price'])) {
+            update_post_meta($post_id, '_property_price', sanitize_text_field($_POST['property_price']));
+        }
+        if (isset($_POST['property_bedrooms'])) {
+            update_post_meta($post_id, '_property_bedrooms', sanitize_text_field($_POST['property_bedrooms']));
+        }
+        if (isset($_POST['property_bathrooms'])) {
+            update_post_meta($post_id, '_property_bathrooms', sanitize_text_field($_POST['property_bathrooms']));
+        }
+        if (isset($_POST['property_type'])) {
+            update_post_meta($post_id, '_property_type', sanitize_text_field($_POST['property_type']));
+        }
     }
 
     // Testimonial Meta
@@ -334,11 +429,25 @@ function estatein_save_property_details($post_id) {
 
     // Hero Meta
     if (isset($_POST['estatein_hero_details_nonce_field']) && wp_verify_nonce($_POST['estatein_hero_details_nonce_field'], 'estatein_hero_details_nonce')) {
-        $hero_fields = ['hero_title_gray', 'hero_stat1_val', 'hero_stat1_lbl', 'hero_stat2_val', 'hero_stat2_lbl', 'hero_stat3_val', 'hero_stat3_lbl'];
+        $hero_fields = [
+            'hero_title_gray', 
+            'hero_stat1_val', 'hero_stat1_lbl', 
+            'hero_stat2_val', 'hero_stat2_lbl', 
+            'hero_stat3_val', 'hero_stat3_lbl',
+            'hero_btn1_text', 'hero_btn1_link',
+            'hero_btn2_text', 'hero_btn2_link',
+            'hero_hide_title',
+            'cta_title', 'cta_btn_text', 'cta_btn_link'
+        ];
         foreach ($hero_fields as $field) {
             if (isset($_POST[$field])) {
                 update_post_meta($post_id, '_' . $field, sanitize_text_field($_POST[$field]));
+            } elseif ($field === 'hero_hide_title') {
+                update_post_meta($post_id, '_hero_hide_title', '0');
             }
+        }
+        if (isset($_POST['cta_desc'])) {
+            update_post_meta($post_id, '_cta_desc', sanitize_textarea_field($_POST['cta_desc']));
         }
     }
 }

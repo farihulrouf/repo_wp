@@ -4,14 +4,18 @@
             <div class="grid lg:grid-cols-12 gap-12 mb-20">
                 <div class="lg:col-span-4">
                     <div class="flex items-center gap-2 mb-8">
-                        <div class="w-10 h-10 purple-gradient rounded-lg flex items-center justify-center">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white"/>
-                                <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                        <span class="text-xl font-bold tracking-tight"><?php bloginfo('name'); ?></span>
+                        <?php if (has_custom_logo()) : ?>
+                            <?php the_custom_logo(); ?>
+                        <?php else : ?>
+                            <div class="w-10 h-10 purple-gradient rounded-lg flex items-center justify-center">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white"/>
+                                    <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <span class="text-xl font-bold tracking-tight"><?php bloginfo('name'); ?></span>
+                        <?php endif; ?>
                     </div>
                     <div class="relative max-w-sm">
                         <input type="email" placeholder="Enter Your Email" class="w-full h-14 pl-6 pr-14 bg-transparent border border-[#262626] rounded-xl focus:outline-none focus:border-[#703BF7]">
@@ -22,38 +26,57 @@
                 </div>
                 
                 <div class="lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-8">
-                    <div>
-                        <h4 class="text-[#B3B3B3] font-medium mb-6">Home</h4>
-                        <ul class="space-y-4 text-sm">
-                            <li><a href="#" class="hover:text-[#703BF7]">Hero Section</a></li>
-                            <li><a href="#" class="hover:text-[#703BF7]">Features</a></li>
-                            <li><a href="#" class="hover:text-[#703BF7]">Properties</a></li>
-                            <li><a href="#" class="hover:text-[#703BF7]">Testimonials</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-[#B3B3B3] font-medium mb-6">About Us</h4>
-                        <ul class="space-y-4 text-sm">
-                            <li><a href="#" class="hover:text-[#703BF7]">Our Story</a></li>
-                            <li><a href="#" class="hover:text-[#703BF7]">Our Works</a></li>
-                            <li><a href="#" class="hover:text-[#703BF7]">Our Team</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-[#B3B3B3] font-medium mb-6">Properties</h4>
-                        <ul class="space-y-4 text-sm">
-                            <li><a href="#" class="hover:text-[#703BF7]">Portfolio</a></li>
-                            <li><a href="#" class="hover:text-[#703BF7]">Categories</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="text-[#B3B3B3] font-medium mb-6">Services</h4>
-                        <ul class="space-y-4 text-sm">
-                            <li><a href="#" class="hover:text-[#703BF7]">Valuation</a></li>
-                            <li><a href="#" class="hover:text-[#703BF7]">Marketing</a></li>
-                            <li><a href="#" class="hover:text-[#703BF7]">Negotiation</a></li>
-                        </ul>
-                    </div>
+                    <?php if (is_active_sidebar('footer-1')) : ?>
+                        <div><?php dynamic_sidebar('footer-1'); ?></div>
+                    <?php else : ?>
+                        <div>
+                            <h4 class="text-[#B3B3B3] font-medium mb-6">Home</h4>
+                            <ul class="space-y-4 text-sm">
+                                <li><a href="#" class="hover:text-[#703BF7]">Hero Section</a></li>
+                                <li><a href="#" class="hover:text-[#703BF7]">Features</a></li>
+                                <li><a href="#" class="hover:text-[#703BF7]">Properties</a></li>
+                                <li><a href="#" class="hover:text-[#703BF7]">Testimonials</a></li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (is_active_sidebar('footer-2')) : ?>
+                        <div><?php dynamic_sidebar('footer-2'); ?></div>
+                    <?php else : ?>
+                        <div>
+                            <h4 class="text-[#B3B3B3] font-medium mb-6">About Us</h4>
+                            <ul class="space-y-4 text-sm">
+                                <li><a href="#" class="hover:text-[#703BF7]">Our Story</a></li>
+                                <li><a href="#" class="hover:text-[#703BF7]">Our Works</a></li>
+                                <li><a href="#" class="hover:text-[#703BF7]">Our Team</a></li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (is_active_sidebar('footer-3')) : ?>
+                        <div><?php dynamic_sidebar('footer-3'); ?></div>
+                    <?php else : ?>
+                        <div>
+                            <h4 class="text-[#B3B3B3] font-medium mb-6">Properties</h4>
+                            <ul class="space-y-4 text-sm">
+                                <li><a href="#" class="hover:text-[#703BF7]">Portfolio</a></li>
+                                <li><a href="#" class="hover:text-[#703BF7]">Categories</a></li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php if (is_active_sidebar('footer-4')) : ?>
+                        <div><?php dynamic_sidebar('footer-4'); ?></div>
+                    <?php else : ?>
+                        <div>
+                            <h4 class="text-[#B3B3B3] font-medium mb-6">Services</h4>
+                            <ul class="space-y-4 text-sm">
+                                <li><a href="#" class="hover:text-[#703BF7]">Valuation</a></li>
+                                <li><a href="#" class="hover:text-[#703BF7]">Marketing</a></li>
+                                <li><a href="#" class="hover:text-[#703BF7]">Negotiation</a></li>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
             
