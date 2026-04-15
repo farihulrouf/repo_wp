@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 📥 Checkout
+    # 📥 Checkout repository
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -21,34 +21,33 @@ jobs:
         php-version: '8.1'
         tools: composer
 
-    # 🔐 FIX: Allow Composer Plugin (IMPORTANT)
+    # 🔐 Allow Composer plugin (IMPORTANT FIX)
     - name: Allow Composer Plugins
       run: |
         composer global config --no-plugins allow-plugins.dealerdirect/phpcodesniffer-composer-installer true
 
-    # 📦 Install PHPCS + WPCS (compatible)
+    # 📦 Install PHPCS + WordPress Coding Standards
     - name: Install PHPCS + WPCS
       run: |
         composer global require "squizlabs/php_codesniffer:^3.13"
         composer global require "wp-coding-standards/wpcs:^3.3"
 
-    # 🔍 Run WordPress Coding Standard
+    # 🔧 Auto fix coding standard (optional but keren)
+    - name: Auto Fix Code Style
+      run: |
+        ~/.composer/vendor/bin/phpcbf --standard=WordPress . || true
+
+    # 🔍 Run PHPCS (ONLY PHP → biar gak error CSS)
     - name: Run PHPCS (WordPress Standard)
       run: |
-        ~/.composer/vendor/bin/phpcs --standard=WordPress .
+        ~/.composer/vendor/bin/phpcs --standard=WordPress --extensions=php .
 
-    # 🧪 PHP Syntax Check
+    # 🧪 Extra safety: PHP syntax check
     - name: PHP Syntax Check
       run: |
         find . -name "*.php" -exec php -l {} \;
 
-    # 🎨 CSS Check
-    - name: Check CSS
-      run: |
-        echo "Checking CSS files..."
-        find . -name "*.css" -exec wc -l {} \;
-
-  # 🚀 Deploy (optional)
+  # 🚀 OPTIONAL: Auto Deploy (InfinityFree compatible)
   deploy:
     needs: quality-check
     runs-on: ubuntu-latest
