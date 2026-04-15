@@ -1,6 +1,6 @@
     <!-- Footer -->
     <footer class="bg-[#0F0F0F] border-t border-[#262626] pt-20 pb-10">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-12 gap-12 mb-20">
                 <div class="lg:col-span-4">
                     <div class="flex items-center gap-2 mb-8">

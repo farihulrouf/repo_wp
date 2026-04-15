@@ -24,7 +24,7 @@ get_header(); ?>
     ?>
     <section class="relative pt-48 pb-20 overflow-hidden">
         <div class="hero-glow"></div>
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="text-center lg:text-left">
                     <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6">
@@ -101,7 +101,7 @@ get_header(); ?>
 
     <!-- Features Section -->
     <section class="py-10">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid sm:grid-cols-2 xl:grid-cols-4 gap-4">
                 <?php
                 $features_query = new WP_Query(array(
@@ -136,7 +136,7 @@ get_header(); ?>
 
     <!-- Properties Section -->
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-12">
                 <div>
                     <div class="flex items-center gap-2 mb-4">
@@ -218,9 +218,10 @@ get_header(); ?>
         </div>
     </section>
 
+
     <!-- Testimonials Section -->
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-12">
                 <div>
                     <div class="flex items-center gap-2 mb-4">
@@ -233,14 +234,9 @@ get_header(); ?>
                         Read the success stories and heartfelt testimonials from our valued clients. Discover why they chose Estatein for their real estate needs.
                     </p>
                 </div>
-                <div class="hidden md:flex gap-4">
-                    <button class="test-prev w-12 h-12 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1E1E1E] transition-all">
-                        <i data-lucide="chevron-left" class="w-6 h-6"></i>
-                    </button>
-                    <button class="test-next w-12 h-12 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1E1E1E] transition-all">
-                        <i data-lucide="chevron-right" class="w-6 h-6"></i>
-                    </button>
-                </div>
+                <a href="#" class="hidden md:flex px-6 py-2.5 rounded-lg border border-[#262626] text-sm font-medium hover:bg-[#1E1E1E] transition-all">
+                    View All Testimonials
+                </a>
             </div>
             
             <div class="swiper testimonials-swiper mb-12">
@@ -248,7 +244,7 @@ get_header(); ?>
                     <?php
                     $testimonials_query = new WP_Query(array(
                         'post_type' => 'testimonial',
-                        'posts_per_page' => 6,
+                        'posts_per_page' => 10,
                     ));
 
                     if ($testimonials_query->have_posts()) :
@@ -266,7 +262,7 @@ get_header(); ?>
                                 </div>
                                 <h3 class="text-xl font-bold mb-4"><?php the_title(); ?></h3>
                                 <p class="text-[#999999] mb-10 leading-relaxed"><?php echo get_the_content(); ?></p>
-                                <div class="flex items-center gap-4 mt-2">
+                                <div class="flex items-center gap-4">
                                     <img src="<?php echo esc_url($avatar); ?>" alt="<?php echo esc_attr($client_name ?: get_the_title()); ?>" class="w-12 h-12 rounded-full">
                                     <div>
                                         <div class="font-bold"><?php echo esc_html($client_name ?: 'Client'); ?></div>
@@ -283,12 +279,26 @@ get_header(); ?>
                     ?>
                 </div>
             </div>
+
+            <div class="flex items-center justify-between border-t border-[#262626] pt-8">
+                <div class="text-sm text-[#999999]">
+                    <span class="text-white font-medium testimonials-current">01</span> of <span class="testimonials-total">01</span>
+                </div>
+                <div class="flex gap-2">
+                    <button class="test-prev w-10 h-10 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1E1E1E] transition-colors">
+                        <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                    </button>
+                    <button class="test-next w-10 h-10 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1E1E1E] transition-colors">
+                        <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-end mb-12">
                 <div>
                     <div class="flex items-center gap-2 mb-4">
@@ -351,7 +361,7 @@ get_header(); ?>
     $cta_btn_link = get_post_meta(get_the_ID(), '_cta_btn_link', true) ?: '#';
     ?>
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="relative rounded-3xl overflow-hidden p-12 lg:p-20 border border-[#262626] bg-gradient-to-br from-[#1A1A1A] to-[#0F0F0F]">
                 <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
                     <div class="max-w-4xl text-center lg:text-left">

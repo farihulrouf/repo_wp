@@ -30,7 +30,7 @@
 
         <!-- Navbar -->
         <nav class="bg-[#0F0F0F]/80 backdrop-blur-md border-b border-[#262626]">
-            <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between items-center h-24">
                     <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-2">
                         <div class="w-10 h-10 purple-gradient rounded-lg flex items-center justify-center">

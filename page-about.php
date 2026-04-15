@@ -17,7 +17,7 @@ get_header(); ?>
     $hero_img = get_the_post_thumbnail_url(get_the_ID(), 'full') ?: 'https://picsum.photos/seed/journey/800/600';
     ?>
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <div class="text-center lg:text-left">
                     <div class="flex items-center justify-center lg:justify-start gap-2 mb-4">
@@ -65,7 +65,7 @@ get_header(); ?>
     $value_desc = get_post_meta(get_the_ID(), '_value_desc', true) ?: 'Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary.';
     ?>
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid lg:grid-cols-3 gap-12">
                 <div class="lg:col-span-1">
                     <div class="flex items-center gap-2 mb-4">
@@ -152,7 +152,7 @@ get_header(); ?>
 
     <!-- Navigating the Estatein Experience -->
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-2 mb-4">
                 <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
                 <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
@@ -193,7 +193,7 @@ get_header(); ?>
 
     <!-- Meet the Estatein Team -->
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-2 mb-4">
                 <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
                 <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
@@ -251,7 +251,7 @@ get_header(); ?>
 
     <!-- Our Valued Clients -->
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-2 mb-4">
                 <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
                 <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
@@ -333,7 +333,7 @@ get_header(); ?>
     $cta_btn_link = get_post_meta(get_the_ID(), '_cta_btn_link', true) ?: '#';
     ?>
     <section class="py-20">
-        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="relative rounded-3xl overflow-hidden p-12 lg:p-20 border border-[#262626] bg-gradient-to-br from-[#1A1A1A] to-[#0F0F0F]">
                 <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
                     <div class="max-w-4xl text-center lg:text-left">
