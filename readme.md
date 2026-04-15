@@ -3,7 +3,7 @@
 A high-fidelity, custom WordPress theme built for the Estatein Real Estate platform. This theme is developed from scratch based on the provided Figma design, focusing on performance, responsiveness, and clean code.
 
 ## 🚀 Live Demo
-**URL:** [https://www.s.com](https://www.s.com)
+**URL:** [https://growmodo.wuaze.com/](https://growmodo.wuaze.com/)
 
 ---
 
