@@ -82,10 +82,7 @@ get_header(); ?>
                                 <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
                                 <text class="text-[8px] uppercase tracking-[0.2em] fill-white font-medium">
                                     <textPath xlink:href="#circlePath">
-                                        <?php 
-                                        $circle_text = get_the_title() . ' • ' . get_the_title() . ' • ';
-                                        echo esc_html($circle_text); 
-                                        ?>
+                                        Discover Your Dream Property • Discover Your Dream Property • 
                                     </textPath>
                                 </text>
                             </svg>
