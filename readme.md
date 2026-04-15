@@ -6,11 +6,13 @@ A high-fidelity, custom WordPress theme built for the Estatein Real Estate platf
 **URL:** [https://growmodo.wuaze.com/](https://growmodo.wuaze.com/)
 
 
-
 **Wp-admin:** [https://growmodo.wuaze.com/wp-admin/](https://growmodo.wuaze.com/wp-admin/)
 
 username : farihul 
-passwprd : peruvianaja
+pass : peruvianaja
+
+
+**FIGMA:** [https://www.figma.com/community/file/1314076616839640516](https://www.figma.com/community/file/1314076616839640516)
 ---
 
 ## ✨ Key Features
