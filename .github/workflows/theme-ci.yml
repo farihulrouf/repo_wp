@@ -1,4 +1,4 @@
-name: WordPress Theme CI/CD
+name: Theme CI/CD
 
 on:
   push:
@@ -6,81 +6,59 @@ on:
   pull_request:
 
 jobs:
-  quality:
-    name: Code Quality Checks
+  quality-check:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    # 📥 Checkout repo
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.1'
-          extensions: mbstring, intl
-          coverage: none
+    # ⚙️ Setup PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.1'
+        tools: composer
 
-      - name: PHP Syntax Check
-        run: |
-          find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
+    # 📦 Install PHPCS + WordPress Coding Standards (compatible versions)
+    - name: Install PHPCS + WPCS
+      run: |
+        composer global require "squizlabs/php_codesniffer:^3.13"
+        composer global require "wp-coding-standards/wpcs:^3.3"
+        ~/.composer/vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/wp-coding-standards/wpcs
 
-      - name: Install PHPCS (WordPress Standards)
-        run: |
-          composer global require "squizlabs/php_codesniffer=*"
-          composer global require wp-coding-standards/wpcs
-          ~/.composer/vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/wp-coding-standards/wpcs
+    # 🔍 Run WordPress Coding Standard check
+    - name: Run PHPCS (WordPress Standard)
+      run: |
+        ~/.composer/vendor/bin/phpcs --standard=WordPress .
 
-      - name: Run PHPCS
-        run: |
-          ~/.composer/vendor/bin/phpcs \
-          --standard=WordPress \
-          --extensions=php \
-          .
+    # 🧪 Basic PHP Syntax Check (extra safety)
+    - name: PHP Syntax Check
+      run: |
+        find . -name "*.php" -exec php -l {} \;
 
-  build:
-    name: Build Theme Package
-    runs-on: ubuntu-latest
-    needs: quality
+    # 🎨 Basic CSS Check (optional simple check)
+    - name: Check CSS files
+      run: |
+        echo "Checking CSS files..."
+        find . -name "*.css" -exec wc -l {} \;
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Prepare build folder
-        run: |
-          mkdir build
-          rsync -av --exclude='.git' --exclude='.github' ./ build/
-
-      - name: Zip theme
-        run: |
-          cd build
-          zip -r estatein-theme.zip .
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: estatein-theme
-          path: build/estatein-theme.zip
-
-  # OPTIONAL (InfinityFree kemungkinan gagal)
+  # 🚀 OPTIONAL: AUTO DEPLOY VIA FTP (InfinityFree compatible)
   deploy:
-    name: Deploy via FTP
+    needs: quality-check
     runs-on: ubuntu-latest
-    needs: build
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Download build
-        uses: actions/download-artifact@v4
-        with:
-          name: estatein-theme
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Deploy
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: .
-          server-dir: /htdocs/wp-content/themes/estatein-theme/
+    - name: Deploy via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./
+        server-dir: /htdocs/wp-content/themes/estatein-theme/
