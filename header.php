@@ -3,6 +3,22 @@
 <head>
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="<?php bloginfo('description'); ?>">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<?php echo esc_url(home_url('/')); ?>">
+    <meta property="og:title" content="<?php wp_title('|', true, 'right'); ?>">
+    <meta property="og:description" content="<?php bloginfo('description'); ?>">
+    <meta property="og:image" content="<?php echo esc_url(get_template_directory_uri() . '/screenshot.png'); ?>">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="<?php echo esc_url(home_url('/')); ?>">
+    <meta property="twitter:title" content="<?php wp_title('|', true, 'right'); ?>">
+    <meta property="twitter:description" content="<?php bloginfo('description'); ?>">
+    <meta property="twitter:image" content="<?php echo esc_url(get_template_directory_uri() . '/screenshot.png'); ?>">
+
     <?php wp_head(); ?>
     <style>
         /* Abstract background lines */
@@ -56,9 +72,13 @@
                     </div>
                     
                     <div class="hidden md:block">
-                        <button class="px-6 py-3 rounded-xl border border-[#262626] bg-[#0F0F0F] text-sm font-medium hover:bg-[#1A1A1A] transition-all">
+                        <?php
+                        $contact_page = get_page_by_path('contact');
+                        $contact_url = $contact_page ? get_permalink($contact_page->ID) : home_url('/contact');
+                        ?>
+                        <a href="<?php echo esc_url($contact_url); ?>" class="px-6 py-3 rounded-xl border border-[#262626] bg-[#0F0F0F] text-sm font-medium hover:bg-[#1A1A1A] transition-all inline-block">
                             Contact Us
-                        </button>
+                        </a>
                     </div>
 
                     <div class="md:hidden">
@@ -74,7 +94,7 @@
                 <a href="<?php echo esc_url($about_url); ?>" class="block text-base font-medium <?php echo $is_about ? 'text-[#703BF7]' : 'hover:text-[#703BF7]'; ?>">About Us</a>
                 <a href="#" class="block text-base font-medium hover:text-[#703BF7]">Properties</a>
                 <a href="#" class="block text-base font-medium hover:text-[#703BF7]">Services</a>
-                <button class="w-full px-6 py-3 rounded-lg bg-[#703BF7] text-white font-medium">Contact Us</button>
+                <a href="<?php echo esc_url($contact_url); ?>" class="block w-full px-6 py-3 rounded-lg bg-[#703BF7] text-white font-medium text-center">Contact Us</a>
             </div>
         </nav>
     </header>
