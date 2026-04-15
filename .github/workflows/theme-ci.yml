@@ -1,0 +1,86 @@
+name: WordPress Theme CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, intl
+          coverage: none
+
+      - name: PHP Syntax Check
+        run: |
+          find . -name "*.php" -not -path "./vendor/*" -exec php -l {} \;
+
+      - name: Install PHPCS (WordPress Standards)
+        run: |
+          composer global require "squizlabs/php_codesniffer=*"
+          composer global require wp-coding-standards/wpcs
+          ~/.composer/vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/wp-coding-standards/wpcs
+
+      - name: Run PHPCS
+        run: |
+          ~/.composer/vendor/bin/phpcs \
+          --standard=WordPress \
+          --extensions=php \
+          .
+
+  build:
+    name: Build Theme Package
+    runs-on: ubuntu-latest
+    needs: quality
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare build folder
+        run: |
+          mkdir build
+          rsync -av --exclude='.git' --exclude='.github' ./ build/
+
+      - name: Zip theme
+        run: |
+          cd build
+          zip -r estatein-theme.zip .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: estatein-theme
+          path: build/estatein-theme.zip
+
+  # OPTIONAL (InfinityFree kemungkinan gagal)
+  deploy:
+    name: Deploy via FTP
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download build
+        uses: actions/download-artifact@v4
+        with:
+          name: estatein-theme
+
+      - name: Deploy
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: .
+          server-dir: /htdocs/wp-content/themes/estatein-theme/
