@@ -495,9 +495,14 @@ function estatein_hero_details_callback($post) {
 
 function estatein_testimonial_details_callback($post) {
     wp_nonce_field('estatein_testimonial_details_nonce', 'estatein_testimonial_details_nonce_field');
+    $name = get_post_meta($post->ID, '_testimonial_name', true);
     $location = get_post_meta($post->ID, '_testimonial_location', true);
     $rating = get_post_meta($post->ID, '_testimonial_rating', true);
     ?>
+    <div style="padding: 10px 0;">
+        <label style="display:block; margin-bottom:5px;"><?php _e('Client Name', 'estatein'); ?></label>
+        <input type="text" name="testimonial_name" value="<?php echo esc_attr($name); ?>" style="width:100%;" />
+    </div>
     <div style="padding: 10px 0;">
         <label style="display:block; margin-bottom:5px;"><?php _e('Location (e.g. USA, California)', 'estatein'); ?></label>
         <input type="text" name="testimonial_location" value="<?php echo esc_attr($location); ?>" style="width:100%;" />
@@ -583,6 +588,9 @@ function estatein_save_property_details($post_id) {
 
     // Testimonial Meta
     if (isset($_POST['estatein_testimonial_details_nonce_field']) && wp_verify_nonce($_POST['estatein_testimonial_details_nonce_field'], 'estatein_testimonial_details_nonce')) {
+        if (isset($_POST['testimonial_name'])) {
+            update_post_meta($post_id, '_testimonial_name', sanitize_text_field($_POST['testimonial_name']));
+        }
         if (isset($_POST['testimonial_location'])) {
             update_post_meta($post_id, '_testimonial_location', sanitize_text_field($_POST['testimonial_location']));
         }

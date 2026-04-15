@@ -253,6 +253,7 @@ get_header(); ?>
 
                     if ($testimonials_query->have_posts()) :
                         while ($testimonials_query->have_posts()) : $testimonials_query->the_post();
+                            $client_name = get_post_meta(get_the_ID(), '_testimonial_name', true);
                             $location = get_post_meta(get_the_ID(), '_testimonial_location', true);
                             $rating = get_post_meta(get_the_ID(), '_testimonial_rating', true) ?: 5;
                             $avatar = get_the_post_thumbnail_url(get_the_ID(), 'thumbnail') ?: 'https://i.pravatar.cc/150?u=' . get_the_ID();
@@ -265,11 +266,11 @@ get_header(); ?>
                                 </div>
                                 <h3 class="text-xl font-bold mb-4"><?php the_title(); ?></h3>
                                 <p class="text-[#999999] mb-10 leading-relaxed"><?php echo get_the_content(); ?></p>
-                                <div class="flex items-center gap-4">
-                                    <img src="<?php echo esc_url($avatar); ?>" alt="<?php the_title(); ?>" class="w-12 h-12 rounded-full">
+                                <div class="flex items-center gap-4 mt-2">
+                                    <img src="<?php echo esc_url($avatar); ?>" alt="<?php echo esc_attr($client_name ?: get_the_title()); ?>" class="w-12 h-12 rounded-full">
                                     <div>
-                                        <div class="font-bold"><?php the_title(); ?></div>
-                                        <div class="text-xs text-[#999999]"><?php echo esc_html($location ?: 'Client'); ?></div>
+                                        <div class="font-bold"><?php echo esc_html($client_name ?: 'Client'); ?></div>
+                                        <div class="text-xs text-[#999999]"><?php echo esc_html($location ?: 'Location'); ?></div>
                                     </div>
                                 </div>
                             </div>
