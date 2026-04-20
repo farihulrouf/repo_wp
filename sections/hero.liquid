@@ -1,0 +1,147 @@
+<section class="relative pt-48 pb-20 overflow-hidden">
+    <div class="hero-glow"></div>
+    <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-center lg:text-left">
+                <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6">
+                    {{ section.settings.heading }}
+                </h1>
+                <p class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-lg mx-auto lg:mx-0">
+                    {{ section.settings.subheading }}
+                </p>
+                
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-16">
+                    {% if section.settings.button_1_text != blank %}
+                    <a href="{{ section.settings.button_1_link }}" class="h-14 px-8 rounded-xl border border-[#262626] font-medium hover:bg-[#1E1E1E] transition-colors flex items-center justify-center">
+                        {{ section.settings.button_1_text }}
+                    </a>
+                    {% endif %}
+                    {% if section.settings.button_2_text != blank %}
+                    <a href="{{ section.settings.button_2_link }}" class="h-14 px-8 rounded-xl bg-[#703BF7] font-medium hover:bg-[#5d2ee0] transition-colors flex items-center justify-center">
+                        {{ section.settings.button_2_text }}
+                    </a>
+                    {% endif %}
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {% for block in section.blocks %}
+                    <div class="glass-card p-4 sm:p-6 {% if forloop.index == 3 %}col-span-2 sm:col-span-1{% endif %}">
+                        <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1">{{ block.settings.value }}</div>
+                        <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider">{{ block.settings.label }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="relative mt-12 lg:mt-0">
+                <div class="relative rounded-3xl overflow-hidden aspect-square max-w-2xl mx-auto">
+                    {% if section.settings.image != blank %}
+                    <img 
+                        src="{{ section.settings.image | image_url: width: 1200 }}" 
+                        alt="{{ section.settings.image.alt }}"
+                        loading="lazy"
+                        class="w-full h-full object-cover"
+                    >
+                    {% else %}
+                    <img 
+                        src="https://picsum.photos/seed/estatein-hero/1200/1200" 
+                        alt="Modern Building"
+                        class="w-full h-full object-cover"
+                    >
+                    {% endif %}
+                    <div class="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/80 to-transparent"></div>
+                </div>
+                
+                <div class="absolute -top-10 -left-10 w-40 h-40 hidden lg:block animate-rotate">
+                    <div class="relative w-full h-full flex items-center justify-center">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                            <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none" />
+                            <text class="text-[8px] uppercase tracking-[0.2em] fill-white font-medium">
+                                <textPath xlink:href="#circlePath">
+                                    {{ section.settings.circle_text }}
+                                </textPath>
+                            </text>
+                        </svg>
+                        <div class="absolute w-12 h-12 bg-[#0F0F0F] border border-[#262626] rounded-full flex items-center justify-center">
+                            <i data-lucide="arrow-up-right" class="w-6 h-6 text-[#703BF7]"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover Your Dream \n Property with Estatein"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Your journey to finding the perfect property begins here. Explore our listings to find the home that matches your dreams."
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "Button 1 Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Button 1 Link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Button 2 Text",
+      "default": "Browse Properties"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Button 2 Link"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero Image"
+    },
+    {
+      "type": "text",
+      "id": "circle_text",
+      "label": "Circle Rotation Text",
+      "default": "Discover Your Dream Property • Discover Your Dream Property •"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Statistic",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "200+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Happy Customers"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3
+}
+{% endschema %}

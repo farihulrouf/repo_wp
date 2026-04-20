@@ -1,0 +1,152 @@
+<section class="py-20">
+    <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
+                    <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
+                    <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
+                </div>
+                <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-4">{{ section.settings.heading }}</h2>
+                <p class="text-[#B3B3B3] max-w-2xl">
+                    {{ section.settings.description }}
+                </p>
+            </div>
+            {% if section.settings.button_text != blank %}
+            <a href="{{ section.settings.button_link }}" class="hidden md:flex px-6 py-2.5 rounded-lg border border-[#262626] text-sm font-medium hover:bg-[#1E1E1E] transition-all">
+                {{ section.settings.button_text }}
+            </a>
+            {% endif %}
+        </div>
+        
+        <div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-6 mb-12">
+            {% for block in section.blocks %}
+            <div class="glass-card p-10" {{ block.shopify_attributes }}>
+                <div class="flex gap-1 mb-6 text-yellow-500">
+                    {% for i in (1..5) %}
+                        {% if i <= block.settings.rating %}
+                        <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                        {% else %}
+                        <i data-lucide="star" class="w-5 h-5"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <h3 class="text-xl font-bold mb-4">{{ block.settings.title }}</h3>
+                <p class="text-[#999999] mb-10 leading-relaxed">{{ block.settings.text }}</p>
+                <div class="flex items-center gap-4">
+                    {% if block.settings.image != blank %}
+                    <img src="{{ block.settings.image | image_url: width: 100 }}" alt="{{ block.settings.author }}" class="w-12 h-12 rounded-full">
+                    {% else %}
+                    <img src="https://i.pravatar.cc/150?u={{ block.id }}" alt="User" class="w-12 h-12 rounded-full">
+                    {% endif %}
+                    <div>
+                        <div class="font-bold">{{ block.settings.author }}</div>
+                        <div class="text-xs text-[#999999]">{{ block.settings.location }}</div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="flex items-center justify-between border-t border-[#262626] pt-8">
+            <div class="text-sm text-[#999999]">
+                <span class="text-white font-medium">01</span> of {{ section.blocks.size }}
+            </div>
+            <div class="flex gap-2">
+                <button class="w-10 h-10 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1E1E1E] transition-colors">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+                <button class="w-10 h-10 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1E1E1E] transition-colors">
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Clients Say"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Read the success stories and heartfelt testimonials from our valued clients."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View All Testimonials"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Rating",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Exceptional Service!"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testimonial Text",
+          "default": "Our experience with Estatein was outstanding. Highly recommended!"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Wade Warren"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Author Location",
+          "default": "USA, California"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Author Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

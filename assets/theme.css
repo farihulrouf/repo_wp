@@ -1,0 +1,71 @@
+.purple-gradient {
+    background: linear-gradient(135deg, #703BF7 0%, #4C28A8 100%);
+}
+.glass-card {
+    background-color: #1A1A1A;
+    border: 1px solid #262626;
+    border-radius: 0.75rem;
+}
+.text-gradient {
+    background: linear-gradient(to right, #FFFFFF, #999999);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+.animate-rotate {
+    animation: rotate 20s linear infinite;
+}
+.border-border {
+    border-color: #262626;
+}
+.bg-card {
+    background-color: #1A1A1A;
+}
+.text-primary {
+    color: #703BF7;
+}
+.bg-primary {
+    background-color: #703BF7;
+}
+.hover-bg-primary:hover {
+    background-color: #5d2ee0;
+}
+.text-muted {
+    color: #B3B3B3;
+}
+.section-title {
+    font-size: 48px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 32px;
+    }
+}
+.hero-glow {
+    position: absolute;
+    top: 50%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(112, 59, 247, 0.15) 0%, rgba(112, 59, 247, 0) 70%);
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+}
+.nav-container {
+    background: rgba(15, 15, 15, 0.9);
+    border: 1px solid #262626;
+    border-radius: 12px;
+    padding: 4px 24px;
+}
+body {
+    background-image: url("data:image/svg+xml,%3Csvg width='1440' height='900' viewBox='0 0 1440 900' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M-100 200C100 150 300 250 500 200C700 150 900 250 1100 200C1300 150 1500 250 1700 200' stroke='%23262626' stroke-width='0.5'/%3E%3Cpath d='M-100 300C100 250 300 350 500 300C700 250 900 350 1100 300C1300 250 1500 350 1700 300' stroke='%23262626' stroke-width='0.5'/%3E%3Cpath d='M-100 400C100 350 300 450 500 400C700 350 900 450 1100 400C1300 350 1500 450 1700 400' stroke='%23262626' stroke-width='0.5'/%3E%3Cpath d='M-100 100C100 50 300 150 500 100C700 50 900 150 1100 100C1300 50 1500 150 1700 100' stroke='%23262626' stroke-width='0.5'/%3E%3Cpath d='M-100 500C100 450 300 550 500 500C700 450 900 550 1100 500C1300 450 1500 550 1700 500' stroke='%23262626' stroke-width='0.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: top center;
+}

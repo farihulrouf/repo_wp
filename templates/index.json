@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Discover Your Dream \n Property with Estatein"
+      }
+    },
+    "properties": {
+      "type": "featured-properties",
+      "settings": {
+        "heading": "Featured Properties",
+        "description": "Explore our handpicked selection of featured properties. Each listing offers a glimpse into exceptional homes and investments available through Estatein."
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "heading": "What Our Clients Say"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "properties",
+    "testimonials"
+  ]
+}

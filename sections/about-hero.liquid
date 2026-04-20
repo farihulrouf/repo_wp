@@ -1,0 +1,80 @@
+<section class="py-20">
+    <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="text-center lg:text-left">
+                <div class="flex items-center justify-center lg:justify-start gap-2 mb-4">
+                    <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
+                    <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
+                    <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
+                </div>
+                <h1 class="text-[36px] sm:text-[48px] lg:text-[60px] 2xl:text-[80px] font-semibold leading-[1.1] tracking-[-0.02em] mb-6">{{ section.settings.heading }}</h1>
+                <p class="text-[#B3B3B3] text-[16px] sm:text-[18px] 2xl:text-[20px] leading-[1.6] mb-10 max-w-2xl mx-auto lg:mx-0">
+                    {{ section.settings.subheading }}
+                </p>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    {% for block in section.blocks %}
+                    <div class="glass-card p-4 sm:p-6 {% if forloop.index == 3 %}col-span-2 sm:col-span-1{% endif %}">
+                        <div class="text-[32px] sm:text-[40px] font-bold leading-[1.2] mb-1">{{ block.settings.value }}</div>
+                        <div class="text-[10px] sm:text-xs text-[#B3B3B3] uppercase tracking-wider">{{ block.settings.label }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="relative rounded-3xl overflow-hidden border border-[#262626]">
+                {% if section.settings.image != blank %}
+                <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.image.alt }}" class="w-full h-full object-cover">
+                {% else %}
+                <img src="https://picsum.photos/seed/journey/800/600" alt="Our Journey" class="w-full h-full object-cover">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "About Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Our Journey"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Our story is one of continuous growth and evolution. We started as a small team with big dreams, determined to create a real estate platform that transcended the ordinary."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Statistic",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "200+"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Happy Customers"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 3
+}
+{% endschema %}

@@ -1,0 +1,107 @@
+<!-- Top Banner -->
+<header class="fixed top-0 left-0 right-0 z-50">
+    {% if section.settings.show_banner %}
+    <div class="bg-[#1E1E1E] py-3 text-center text-sm border-b border-[#262626] relative">
+        <p class="text-[#B3B3B3]">
+            {{ section.settings.banner_text }}
+            {% if section.settings.banner_link_text != blank %}
+            <a href="{{ section.settings.banner_link }}" class="text-white underline underline-offset-4 ml-2 font-semibold">{{ section.settings.banner_link_text }}</a>
+            {% endif %}
+        </p>
+        <button class="absolute right-4 top-1/2 -translate-y-1/2 text-[#999999] hover:text-white">
+            <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+    </div>
+    {% endif %}
+
+    <!-- Navbar -->
+    <nav class="bg-[#0F0F0F]/80 backdrop-blur-md border-b border-[#262626]">
+        <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <a href="/" class="flex items-center gap-2">
+                    <div class="w-10 h-10 purple-gradient rounded-lg flex items-center justify-center">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="white"/>
+                            <path d="M2 17L12 22L22 17" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="text-xl font-bold tracking-tight">{{ shop.name }}</span>
+                </a>
+                
+                <div class="hidden md:flex items-center gap-2 nav-container">
+                    {% for link in section.settings.menu.links %}
+                    <a href="{{ link.url }}" class="px-5 py-3 text-sm font-medium {% if link.active %}text-white bg-[#1A1A1A] border border-[#262626] rounded-lg{% else %}text-[#B3B3B3] hover:text-white transition-colors{% endif %}">{{ link.title }}</a>
+                    {% endfor %}
+                </div>
+                
+                <div class="hidden md:block">
+                    <a href="{{ section.settings.cta_link }}" class="px-6 py-3 rounded-xl border border-[#262626] bg-[#0F0F0F] text-sm font-medium hover:bg-[#1A1A1A] transition-all inline-block">
+                        {{ section.settings.cta_text }}
+                    </a>
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="p-2 text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-[#262626] bg-[#0F0F0F] px-4 py-6 space-y-4">
+            {% for link in section.settings.menu.links %}
+            <a href="{{ link.url }}" class="block text-base font-medium {% if link.active %}text-[#703BF7]{% else %}hover:text-[#703BF7]{% endif %}">{{ link.title }}</a>
+            {% endfor %}
+            <a href="{{ section.settings.cta_link }}" class="block w-full px-6 py-3 rounded-lg bg-[#703BF7] text-white font-medium text-center">{{ section.settings.cta_text }}</a>
+        </div>
+    </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_banner",
+      "label": "Show Top Banner",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "banner_text",
+      "label": "Banner Text",
+      "default": "✨ Discover Your Dream Property with Estatein"
+    },
+    {
+      "type": "text",
+      "id": "banner_link_text",
+      "label": "Banner Link Text",
+      "default": "Learn More"
+    },
+    {
+      "type": "url",
+      "id": "banner_link",
+      "label": "Banner Link"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Main Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Contact Us"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA Button Link"
+    }
+  ]
+}
+{% endschema %}

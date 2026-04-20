@@ -1,0 +1,181 @@
+<section class="py-20 overflow-hidden">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <div class="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-end mb-12">
+            <div>
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="w-2 h-2 bg-[#703BF7] rounded-full"></div>
+                    <div class="w-2 h-2 bg-[#703BF7]/40 rounded-full"></div>
+                    <div class="w-2 h-2 bg-[#703BF7]/20 rounded-full"></div>
+                </div>
+                <h2 class="text-[32px] sm:text-[48px] font-semibold leading-[1.2] mb-4">{{ section.settings.heading }}</h2>
+                <p class="text-[#B3B3B3] max-w-2xl">
+                    {{ section.settings.description }}
+                </p>
+            </div>
+            {% if section.settings.button_text != blank %}
+            <a href="{{ section.settings.button_link }}" class="hidden md:flex px-6 py-2.5 rounded-lg border border-[#262626] text-sm font-medium hover:bg-[#1E1E1E] transition-all">
+                {{ section.settings.button_text }}
+            </a>
+            {% endif %}
+        </div>
+        
+        <div class="swiper properties-swiper mb-12">
+            <div class="swiper-wrapper">
+                {%- assign prop_collection = collections[section.settings.collection] -%}
+                
+                {%- if prop_collection != blank and prop_collection.products_count > 0 -%}
+                    {%- assign display_products = prop_collection.products -%}
+                {%- else -%}
+                    {%- assign display_products = collections.all.products -%}
+                {%- endif -%}
+
+                {% if display_products.size > 0 %}
+                    {% for product in display_products limit: section.settings.limit %}
+                    <div class="swiper-slide h-auto">
+                        <div class="glass-card p-6 group h-full flex flex-col">
+                            <div class="rounded-xl overflow-hidden mb-6 aspect-[4/3]">
+                                {% if product.featured_image != blank %}
+                                <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                {%- else -%}
+                                <img src="https://picsum.photos/seed/estate{{ forloop.index }}/800/600" alt="Villa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                {%- endif -%}
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">{{ product.title }}</h3>
+                            <div class="text-sm text-[#999999] mb-6 line-clamp-2">
+                                {{ product.description | strip_html | truncatewords: 25 }}
+                                <a href="{{ product.url }}" class="text-white hover:underline ml-1">Read More</a>
+                            </div>
+                            
+                            <div class="flex flex-wrap gap-3 mb-8 mt-auto">
+                                <div class="flex items-center gap-2 px-3 py-1.5 bg-[#1A1A1A] rounded-full text-xs border border-[#262626]">
+                                    <i data-lucide="bed" class="w-3.5 h-3.5 text-[#703BF7]"></i> 
+                                    <span>{% if product.metafields.property.bedrooms %}{{ product.metafields.property.bedrooms }}{% else %}4{% endif %}</span>
+                                </div>
+                                <div class="flex items-center gap-2 px-3 py-1.5 bg-[#1A1A1A] rounded-full text-xs border border-[#262626]">
+                                    <i data-lucide="bath" class="w-3.5 h-3.5 text-[#703BF7]"></i> 
+                                    <span>{% if product.metafields.property.bathrooms %}{{ product.metafields.property.bathrooms }}{% else %}3{% endif %}</span>
+                                </div>
+                                <div class="flex items-center gap-2 px-3 py-1.5 bg-[#1A1A1A] rounded-full text-xs border border-[#262626]">
+                                    <i data-lucide="home" class="w-3.5 h-3.5 text-[#703BF7]"></i> 
+                                    <span>{{ product.type | default: 'Villa' }}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between pt-6 border-t border-[#262626]">
+                                <div>
+                                    <div class="text-xs text-[#999999] mb-1">Price</div>
+                                    <div class="text-xl font-bold">{{ product.price | money }}</div>
+                                </div>
+                                <a href="{{ product.url }}" class="px-5 py-2.5 rounded-lg bg-[#703BF7] text-sm font-medium hover:bg-[#5d2ee0] transition-all">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <!-- Show this if literally no products in shop -->
+                    {% for i in (1..3) %}
+                    <div class="swiper-slide">
+                        <div class="glass-card p-6 h-full flex flex-col opacity-50">
+                            <div class="rounded-xl overflow-hidden mb-6 aspect-[4/3] bg-[#262626]"></div>
+                            <h3 class="text-xl font-bold mb-2">No Properties Found</h3>
+                            <p class="text-sm">Add a product in your Shopify Admin to see it here.</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="flex items-center justify-between border-t border-[#262626] pt-8">
+            <div class="text-sm text-[#999999]">
+                <span class="text-white font-medium properties-current">01</span> of <span class="properties-total">{{ collection.products_count | default: 0 }}</span>
+            </div>
+            <div class="flex gap-2">
+                <button class="prop-prev w-10 h-10 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1E1E1E] transition-colors">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+                <button class="prop-next w-10 h-10 rounded-full border border-[#262626] flex items-center justify-center hover:bg-[#1E1E1E] transition-colors">
+                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const swiped = new Swiper('.properties-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 24,
+                navigation: {
+                    nextEl: '.prop-next',
+                    prevEl: '.prop-prev',
+                },
+                breakpoints: {
+                    640: { slidesPerView: 2 },
+                    1280: { slidesPerView: 3 }
+                },
+                on: {
+                    slideChange: function () {
+                         const current = document.querySelector('.properties-current');
+                         if(current) current.textContent = (this.realIndex + 1).toString().padStart(2, '0');
+                    }
+                }
+            });
+        });
+    </script>
+</section>
+
+{% schema %}
+{
+  "name": "Featured Properties",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Featured Properties"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Explore our handpicked selection of featured properties. Each listing offers a glimpse into exceptional homes and investments available through Estatein."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "min": 3,
+      "max": 9,
+      "step": 3,
+      "label": "Show Number of Properties",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "View All Properties"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Properties"
+    }
+  ]
+}
+{% endschema %}
