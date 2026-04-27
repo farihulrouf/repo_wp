@@ -13,37 +13,7 @@ define('ESTATEIN_THEME_URI', get_template_directory_uri());
 require ESTATEIN_THEME_DIR . '/inc/post-types.php';
 require ESTATEIN_THEME_DIR . '/inc/meta-boxes.php';
 require ESTATEIN_THEME_DIR . '/inc/enqueue.php';
-
-/**
- * Basic Theme Setup
- */
-if (!function_exists('estatein_setup')) :
-    function estatein_setup() {
-        add_theme_support('automatic-feed-links');
-        add_theme_support('title-tag');
-        add_theme_support('post-thumbnails');
-
-        add_theme_support('custom-logo', [
-            'height'      => 100,
-            'width'       => 400,
-            'flex-height' => true,
-            'flex-width'  => true,
-        ]);
-
-        register_nav_menus([
-            'menu-1' => esc_html__('Primary', 'estatein'),
-        ]);
-
-        add_theme_support('html5', [
-            'search-form',
-            'comment-form',
-            'comment-list',
-            'gallery',
-            'caption',
-        ]);
-    }
-endif;
-add_action('after_setup_theme', 'estatein_setup');
+require ESTATEIN_THEME_DIR . '/inc/setup.php';
 
 /**
  * Register Widget Areas (Sidebars)
