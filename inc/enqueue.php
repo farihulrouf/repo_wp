@@ -32,14 +32,13 @@ function estatein_scripts() {
 
     wp_enqueue_script('lucide-icons', 'https://unpkg.com/lucide@latest', array(), null, true);
 
-    // 🚀 App JS (custom kamu)
-   /* wp_enqueue_script(
-        'estatein-js',
-        get_template_directory_uri() . '/assets/js/app.js',
-        [],
-        '1.0',
+    wp_enqueue_script(
+        'estatein-main',
+        get_template_directory_uri() . '/assets/js/estatein.js',
+        array('jquery', 'swiper'),
+        null,
         true
-    );*/
+    );
 }
 
 add_action('wp_enqueue_scripts', 'estatein_scripts');

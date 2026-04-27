@@ -5,7 +5,9 @@
 require get_template_directory() . '/inc/setup.php';
 require get_template_directory() . '/inc/enqueue.php';
 require get_template_directory() . '/inc/post-types.php';
-
+/**
+ * Register Custom Post Types
+ */
 /**
  * Register widget area.
  */
@@ -613,4 +615,3 @@ function estatein_custom_js() {
     </script>
     <?php
 }
-add_action('wp_footer', 'estatein_custom_js');
