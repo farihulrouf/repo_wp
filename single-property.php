@@ -39,7 +39,14 @@ get_header(); ?>
                 <!-- Main Showcase Gallery -->
                 <div class="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mb-12">
                     <div class="relative rounded-3xl overflow-hidden border border-[#262626] aspect-[16/9] lg:aspect-[21/9]">
-                        <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover">
+                        <?php if (has_post_thumbnail()) : ?>
+                            <?php the_post_thumbnail('full', [
+                                'class' => 'w-full h-full object-cover',
+                                'loading' => 'lazy'
+                            ]); ?>
+                        <?php else : ?>
+                            <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover" loading="lazy">
+                        <?php endif; ?>
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/60 to-transparent"></div>
                     </div>
                 </div>

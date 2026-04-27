@@ -72,7 +72,14 @@ get_header(); ?>
 
                 <div class="relative mt-12 lg:mt-0">
                     <div class="relative rounded-3xl overflow-hidden aspect-square max-w-2xl mx-auto border border-[#262626]">
-                        <img src="<?php echo esc_url($hero_img); ?>" alt="Modern Building" class="w-full h-full object-cover">
+                        <?php if (has_post_thumbnail()) : ?>
+                            <?php the_post_thumbnail('full', [
+                                'class' => 'w-full h-full object-cover',
+                                'loading' => 'eager' // Important: Hero image should load eagerly for LCP
+                            ]); ?>
+                        <?php else : ?>
+                            <img src="<?php echo esc_url($hero_img); ?>" alt="Modern Building" class="w-full h-full object-cover" loading="eager">
+                        <?php endif; ?>
                         <div class="absolute inset-0 bg-gradient-to-t from-[#0F0F0F]/80 to-transparent"></div>
                     </div>
                     

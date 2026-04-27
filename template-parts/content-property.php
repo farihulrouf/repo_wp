@@ -13,7 +13,14 @@ $thumb = get_the_post_thumbnail_url(get_the_ID(), 'large') ?: 'https://picsum.ph
 
 <article class="glass-card p-6 group flex flex-col h-full <?php echo esc_attr($extra_classes); ?>">
     <div class="rounded-xl overflow-hidden mb-6 aspect-[4/3] relative">
-        <img src="<?php echo esc_url($thumb); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <?php if (has_post_thumbnail()) : ?>
+            <?php the_post_thumbnail('large', [
+                'class' => 'w-full h-full object-cover group-hover:scale-110 transition-transform duration-500',
+                'loading' => 'lazy'
+            ]); ?>
+        <?php else : ?>
+            <img src="https://picsum.photos/seed/<?php the_ID(); ?>/600/400" loading="lazy" alt="<?php the_title(); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+        <?php endif; ?>
         <?php if ($type) : ?>
             <div class="absolute top-4 left-4 bg-[#0F0F0F]/80 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-medium border border-[#262626]">
                 <?php echo esc_html($type); ?>
