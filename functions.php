@@ -4,10 +4,122 @@
  */
 require get_template_directory() . '/inc/setup.php';
 require get_template_directory() . '/inc/enqueue.php';
-require get_template_directory() . '/inc/post-types.php';
+
 /**
  * Register Custom Post Types
  */
+function estatein_register_post_types() {
+    // Properties CPT
+    register_post_type('property', array(
+        'labels' => array(
+            'name' => __('Properties', 'estatein'),
+            'singular_name' => __('Property', 'estatein'),
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'menu_icon' => 'dashicons-admin-home',
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Testimonials CPT
+    register_post_type('testimonial', array(
+        'labels' => array(
+            'name' => __('Testimonials', 'estatein'),
+            'singular_name' => __('Testimonial', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-testimonial',
+        'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // FAQ CPT
+    register_post_type('faq', array(
+        'labels' => array(
+            'name' => __('FAQs', 'estatein'),
+            'singular_name' => __('FAQ', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-editor-help',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Feature CPT
+    register_post_type('feature', array(
+        'labels' => array(
+            'name' => __('Features', 'estatein'),
+            'singular_name' => __('Feature', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-star-filled',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Team Member CPT
+    register_post_type('team_member', array(
+        'labels' => array(
+            'name' => __('Team Members', 'estatein'),
+            'singular_name' => __('Team Member', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-groups',
+        'supports' => array('title', 'editor', 'thumbnail', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Client CPT
+    register_post_type('client', array(
+        'labels' => array(
+            'name' => __('Clients', 'estatein'),
+            'singular_name' => __('Client', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-businessman',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Achievement CPT
+    register_post_type('achievement', array(
+        'labels' => array(
+            'name' => __('Achievements', 'estatein'),
+            'singular_name' => __('Achievement', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-awards',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Experience Step CPT
+    register_post_type('experience_step', array(
+        'labels' => array(
+            'name' => __('Experience Steps', 'estatein'),
+            'singular_name' => __('Experience Step', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-list-view',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+
+    // Value CPT
+    register_post_type('value', array(
+        'labels' => array(
+            'name' => __('Values', 'estatein'),
+            'singular_name' => __('Value', 'estatein'),
+        ),
+        'public' => true,
+        'menu_icon' => 'dashicons-heart',
+        'supports' => array('title', 'editor', 'custom-fields'),
+        'show_in_rest' => true,
+    ));
+}
+add_action('init', 'estatein_register_post_types');
+
 /**
  * Register widget area.
  */
@@ -615,3 +727,4 @@ function estatein_custom_js() {
     </script>
     <?php
 }
+add_action('wp_footer', 'estatein_custom_js');
