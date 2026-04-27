@@ -1,0 +1,25 @@
+{
+  "name": "estatein-theme",
+  "version": "1.0.0",
+  "description": "A high-fidelity, custom WordPress theme built for the Estatein Real Estate platform. This theme is developed from scratch based on the provided Figma design, focusing on performance, responsiveness, and clean code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farihulrouf/repo_wp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/farihulrouf/repo_wp/issues"
+  },
+  "homepage": "https://github.com/farihulrouf/repo_wp#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.5.0",
+    "postcss": "^8.5.12",
+    "tailwindcss": "^3.4.3"
+  }
+}

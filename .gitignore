@@ -1,16 +1,29 @@
-# WordPress Theme .gitignore
+# Node modules (WAJIB ignore)
 node_modules/
+
+# Build output (kalau kamu compile Tailwind)
 dist/
-.DS_Store
-Thumbs.db
+build/
+
+# Logs
 *.log
-.env
-.vscode/
-.idea/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Build artifacts
-/build
-/vendor
+# OS files
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# WordPress cache (optional)
+.cache/
+
+# Package lock (optional, tergantung tim)
+# package-lock.json
