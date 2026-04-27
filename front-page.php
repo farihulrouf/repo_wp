@@ -166,44 +166,7 @@ get_header(); ?>
 
                     if ($properties_query->have_posts()) :
                         while ($properties_query->have_posts()) : $properties_query->the_post();
-                            $price = get_post_meta(get_the_ID(), '_property_price', true);
-                            $bedrooms = get_post_meta(get_the_ID(), '_property_bedrooms', true);
-                            $bathrooms = get_post_meta(get_the_ID(), '_property_bathrooms', true);
-                            $type = get_post_meta(get_the_ID(), '_property_type', true);
-                            $thumbnail = get_the_post_thumbnail_url(get_the_ID(), 'large') ?: 'https://picsum.photos/seed/' . get_the_ID() . '/600/450';
-                            ?>
-                            <div class="swiper-slide glass-card p-6 group">
-                                <div class="rounded-xl overflow-hidden mb-6 aspect-[4/3]">
-                                    <img src="<?php echo esc_url($thumbnail); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <h3 class="text-xl font-bold mb-2"><?php the_title(); ?></h3>
-                                <p class="text-sm text-[#B3B3B3] mb-6 line-clamp-2"><?php echo get_the_excerpt(); ?> <a href="<?php the_permalink(); ?>" class="text-white cursor-pointer">Read More</a></p>
-                                <div class="flex flex-wrap gap-3 mb-8">
-                                    <?php if ($bedrooms) : ?>
-                                        <div class="flex items-center gap-2 px-3 py-1.5 bg-[#1E1E1E] rounded-full text-xs border border-[#262626]">
-                                            <i data-lucide="bed" class="w-3.5 h-3.5"></i> <?php echo esc_html($bedrooms); ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if ($bathrooms) : ?>
-                                        <div class="flex items-center gap-2 px-3 py-1.5 bg-[#1E1E1E] rounded-full text-xs border border-[#262626]">
-                                            <i data-lucide="bath" class="w-3.5 h-3.5"></i> <?php echo esc_html($bathrooms); ?>
-                                        </div>
-                                    <?php endif; ?>
-                                    <?php if ($type) : ?>
-                                        <div class="flex items-center gap-2 px-3 py-1.5 bg-[#1E1E1E] rounded-full text-xs border border-[#262626]">
-                                            <i data-lucide="home" class="w-3.5 h-3.5"></i> <?php echo esc_html($type); ?>
-                                        </div>
-                                    <?php endif; ?>
-                                </div>
-                                <div class="flex items-center justify-between">
-                                    <div>
-                                        <div class="text-xs text-[#B3B3B3] mb-1">Price</div>
-                                        <div class="text-xl font-bold"><?php echo esc_html($price ?: '$0'); ?></div>
-                                    </div>
-                                    <a href="<?php the_permalink(); ?>" class="px-5 py-2.5 rounded-lg bg-[#703BF7] text-sm font-medium hover:bg-[#5d2ee0] transition-all">View Details</a>
-                                </div>
-                            </div>
-                        <?php
+                            get_template_part('template-parts/content', 'property', array('class' => 'swiper-slide'));
                         endwhile;
                         wp_reset_postdata();
                     else :

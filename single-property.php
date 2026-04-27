@@ -167,20 +167,7 @@ get_header(); ?>
 
                         if ($related_query->have_posts()) :
                             while ($related_query->have_posts()) : $related_query->the_post();
-                                $r_price = get_post_meta(get_the_ID(), '_property_price', true);
-                                $r_thumb = get_the_post_thumbnail_url(get_the_ID(), 'large') ?: 'https://picsum.photos/seed/' . get_the_ID() . '/600/400';
-                                ?>
-                                <div class="glass-card p-6 group">
-                                    <div class="rounded-xl overflow-hidden mb-6 aspect-[4/3]">
-                                        <img src="<?php echo esc_url($r_thumb); ?>" alt="<?php the_title(); ?>" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                    </div>
-                                    <h3 class="text-xl font-bold mb-2"><?php the_title(); ?></h3>
-                                    <div class="flex items-center justify-between mt-6">
-                                        <div class="text-xl font-bold text-[#703BF7]"><?php echo esc_html($r_price ?: '$0'); ?></div>
-                                        <a href="<?php the_permalink(); ?>" class="px-5 py-2.5 rounded-lg bg-[#262626] text-sm font-medium hover:bg-[#1A1A1A] transition-all">Details</a>
-                                    </div>
-                                </div>
-                            <?php
+                                get_template_part('template-parts/content', 'property');
                             endwhile;
                             wp_reset_postdata();
                         endif;
