@@ -67,7 +67,7 @@
                         ?>
                         <a href="<?php echo esc_url(home_url('/')); ?>" class="px-5 py-3 text-sm font-medium <?php echo is_front_page() ? 'text-white bg-[#1A1A1A] border border-[#262626] rounded-lg' : 'text-[#B3B3B3] hover:text-white transition-colors'; ?>">Home</a>
                         <a href="<?php echo esc_url($about_url); ?>" class="px-5 py-3 text-sm font-medium <?php echo $is_about ? 'text-white bg-[#1A1A1A] border border-[#262626] rounded-lg' : 'text-[#B3B3B3] hover:text-white transition-colors'; ?>">About Us</a>
-                        <a href="#" class="px-5 py-3 text-sm font-medium text-[#B3B3B3] hover:text-white transition-colors">Properties</a>
+                        <a href="<?php echo get_post_type_archive_link('property'); ?>" class="px-5 py-3 text-sm font-medium <?php echo is_post_type_archive('property') ? 'text-white bg-[#1A1A1A] border border-[#262626] rounded-lg' : 'text-[#B3B3B3] hover:text-white transition-colors'; ?>">Properties</a>
                         <a href="#" class="px-5 py-3 text-sm font-medium text-[#B3B3B3] hover:text-white transition-colors">Services</a>
                     </div>
                     
@@ -92,7 +92,7 @@
             <div id="mobile-menu" class="hidden md:hidden border-t border-[#262626] bg-[#0F0F0F] px-4 py-6 space-y-4">
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="block text-base font-medium <?php echo is_front_page() ? 'text-[#703BF7]' : 'hover:text-[#703BF7]'; ?>">Home</a>
                 <a href="<?php echo esc_url($about_url); ?>" class="block text-base font-medium <?php echo $is_about ? 'text-[#703BF7]' : 'hover:text-[#703BF7]'; ?>">About Us</a>
-                <a href="#" class="block text-base font-medium hover:text-[#703BF7]">Properties</a>
+                <a href="<?php echo get_post_type_archive_link('property'); ?>" class="block text-base font-medium <?php echo is_post_type_archive('property') ? 'text-[#703BF7]' : 'hover:text-[#703BF7]'; ?>">Properties</a>
                 <a href="#" class="block text-base font-medium hover:text-[#703BF7]">Services</a>
                 <a href="<?php echo esc_url($contact_url); ?>" class="block w-full px-6 py-3 rounded-lg bg-[#703BF7] text-white font-medium text-center">Contact Us</a>
             </div>
